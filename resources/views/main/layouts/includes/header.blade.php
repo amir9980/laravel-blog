@@ -2,10 +2,10 @@
 <div class="main-header">
     <section class="navbar navbar-light container-md">
         <div class="col-6 mr-3 ">
-            <a class="btn decoration-none register-button" href="#?login">
+            <a class="btn decoration-none register-button" href="{{route('register')}}">
                 <small>ثبت نام</small>
             </a>
-            <a class="link-muted decoration-none login-nav-link"  href="#?login">
+            <a class="link-muted decoration-none login-nav-link"  href="{{route('login')}}">
                 <small>ورود</small>
             </a>
 
