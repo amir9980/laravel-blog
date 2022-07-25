@@ -13,12 +13,11 @@
 </head>
 @yield('style')
 <body>
+    @include("main.layouts.includes.header")
 
-    @include("layouts.includes.header")
-
-    <div class="" >
+    <div>
         <div>
-            @include("layouts.includes.sidebar")
+            @include("main.layouts.includes.sidebar")
             <div class="@yield('body-class')" style="background-image: url('/defaults/@yield("bg-url")'); background-repeat: no-repeat; background-size: cover">
 
                 <div class="">
@@ -32,7 +31,7 @@
         </div>
     </div>
 
-@include("layouts.includes.footer")
+@include("main.layouts.includes.footer")
 
     <script src="/bootstrap/js/bootstrap.min.js" ></script>
     <script src="/js/jquery-3.6.0.min.js"></script>

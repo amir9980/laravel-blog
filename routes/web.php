@@ -26,9 +26,7 @@ Route::prefix('admin')->group(function (){
 });
 
 
-Route::get('/', function () {
-    return view('main.home');
-});
+Route::get('/', [ArticleController::class, 'index']);
 
 
 
