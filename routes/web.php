@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Blog\ArticleController;
+use App\Http\Controllers\Admin\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +15,14 @@ use \App\Http\Controllers\Blog\ArticleController;
 |
 */
 
+require __DIR__.'/auth.php';
+
+Route::prefix('admin')->group(function (){
+    Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
+});
+
+
+Route::get('/', function () {
+    return view('main.home');
+});
 Route::get('/', [ArticleController::class, 'index']);
