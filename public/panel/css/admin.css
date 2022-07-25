@@ -16,9 +16,9 @@ body{
         /*position: fixed;*/
         transition: transform .5s linear;
     }
-     #sidebar.collapse{
-        transform: translate(100%,0);
-    }
+    /* #sidebar.collapse{*/
+    /*    transform: translate(100%,0);*/
+    /*}*/
     #sidebar.collapse.show{
         transform: translate(0,0);
     }
