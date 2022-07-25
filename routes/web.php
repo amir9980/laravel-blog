@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Blog\ArticleController;
 use App\Http\Controllers\Admin\AdminController;
 
 /*
@@ -24,4 +25,4 @@ Route::prefix('admin')->group(function (){
 Route::get('/', function () {
     return view('main.home');
 });
-
+Route::get('/', [ArticleController::class, 'index']);
