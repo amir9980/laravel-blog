@@ -26,14 +26,14 @@ class Article extends Model
         'tags'=>'json'
     ];
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     public function comments()
