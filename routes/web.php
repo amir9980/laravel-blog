@@ -31,7 +31,6 @@ Route::prefix('admin')->group(function (){
 
 // ----------------------------- home --------------------
 Route::get('/', [ArticleController::class, 'index']);
-=========
 
 // ======================== articles =============================
 Route::prefix("articles")->group(function () {
