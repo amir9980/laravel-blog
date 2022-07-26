@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Blog\ArticleController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ArticleController as adminArticleController;
 use App\Http\Controllers\Admin\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,22 @@ require __DIR__."/auth.php";
 
 Route::prefix('admin')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
-    Route::resource('article',ArticleController::class);
+    Route::resource('article',adminArticleController::class);
     Route::get('/user/index',[UserController::class,'index'])->name('admin.user.index');
     Route::get('/user/edit',[UserController::class,'index'])->name('admin.user.edit');
     Route::put('/user/update',[UserController::class,'index'])->name('admin.user.update');
 });
 
 
-Route::get('/', [ArticleController::class, 'index']);
 
+// ----------------------------- home --------------------
+Route::get('/', [ArticleController::class, 'index']);
+=========
+
+// ======================== articles =============================
+Route::prefix("articles")->group(function () {
+
+    // ----------------------------- single article ----------
+    Route::get("/{slug}", [ArticleController::class, 'show'])->name('article.show');
+});
 

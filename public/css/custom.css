@@ -199,3 +199,20 @@ body {
 .articles-bookmark {
     font-size: 20px
 }
+.read-more, .read-more {
+    display: block;
+    margin: auto;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgba(35, 168, 51, 0.71);
+    font-weight: bold;
+    transition: 0.5s max-width ease;
+    cursor: pointer;
+}
+.read-more:hover, .read-more:hover {
+    transition: 0.5s;
+    font-size: 18px;
+    color: rgba(0, 160, 20, 0.85);
+    max-width: 68%;
+}
