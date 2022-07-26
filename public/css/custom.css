@@ -1,3 +1,6 @@
+body {
+    background-color: #DDDDDD;
+}
 .navbar-brand {
     width: 100px;
     height: 100px;
@@ -10,9 +13,6 @@
 .register-button {
     border: solid #7293be 1px;
     border-radius: 20px;
-}
-body {
-    background-color: #DDDDDD;
 }
 
 .navbar-bg {
@@ -108,4 +108,94 @@ body {
 }
 .logo-section {
     justify-content: right
+}
+.letter {
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    max-width: 550px;
+    width: 100%;
+    padding: 24px;
+    position: relative;
+    z-index: 1;
+    text-align: right;
+    float: right;
+
+}
+.letter:before, .letter:after {
+    content: "";
+    height: 98%;
+    position: absolute;
+    width: 100%;
+    z-index: -4;
+}
+.letter:before {
+    background: #fafafa;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    left: -5px;
+    top: 4px;
+
+    transform: rotate(-2.5deg);
+}
+.letter:after {
+    background: #f6f6f6;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    right: -3px;
+    top: 1px;
+    transform: rotate(1.4deg);
+}
+.img-bg {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: right;
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    overflow: hidden;
+    margin-top: 10px;
+    border-radius: 5px
+}
+
+.article-details {
+    text-align: right;
+}
+.article-card {
+    margin-top: 90px;
+    float: right;
+    max-width: 850px;
+    min-height: 310px;
+    max-height: 400px;
+    background-color: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border: 1px solid transparent
+}
+.profile {
+    border-radius: 50%;width: 60px;height: 60px
+}
+.custom-a {
+    text-decoration: none;
+    color: black;
+}
+.small-font {
+    font-size: 15px;
+    font-weight: bold;
+}
+.sidebar-username {
+    font-size: 13px;
+}
+.tops-ul {
+    padding: 0
+}
+.sidebar-title {
+    color: #363636;
+    font-size: 20px;
+    font-weight: 700;
+}
+.sidebar-section {
+    margin-left: 70px;
+    height: 100vh;
+    border-radius: 10px
+}
+.articles-bookmark {
+    font-size: 20px
 }

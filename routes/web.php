@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Blog\ArticleController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\UserController;
@@ -24,11 +25,3 @@ Route::prefix('admin')->group(function (){
     Route::get('/user/edit',[UserController::class,'index'])->name('admin.user.edit');
     Route::put('/user/update',[UserController::class,'index'])->name('admin.user.update');
 });
-
-
-Route::get('/', function () {
-    return view('main.home');
-});
-
-
-
