@@ -25,3 +25,16 @@ Route::prefix('admin')->group(function (){
     Route::get('/user/edit',[UserController::class,'index'])->name('admin.user.edit');
     Route::put('/user/update',[UserController::class,'index'])->name('admin.user.update');
 });
+
+
+
+// ----------------------------- home --------------------
+Route::get('/', [ArticleController::class, 'index']);
+
+// ======================== articles =============================
+Route::prefix("articles")->group(function () {
+
+    // ----------------------------- single article ----------
+    Route::get("/{slug}", [ArticleController::class, 'show'])->name('article.show');
+});
+

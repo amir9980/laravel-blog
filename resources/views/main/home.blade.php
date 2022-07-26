@@ -2,6 +2,7 @@
 
 @section('title', 'خانه')
 @section('style')
+
 @endsection
 @section('content')
 
@@ -76,20 +77,22 @@
                     </div>
 
                     <div class="col-7 col-lg-8  col-sm-6 col-md-7 pt-2 pb-2 pe-0" >
-
-                        <a class="custom-a" href="#?">
+                        <div class="h-75">
+                        <a class="custom-a" href="{{route('article.show', $article->slug)}}">
                             <h5>{{$article->title}}</h5>
                         </a>
                             <p>{{$article->description}}</p>
-
+                        </div>
+                    <hr>
+                        <a  href="{{route('article.show', $article->slug)}}"  class="read-more" aria-label="Read More">ادامه مطلب</a>
 
                     </div>
 
                     <div class="article-details col-5  col-lg-4 col-sm-6 col-md-5 pe-0">
-                        <a class="custom-a" href="#?">
-{{--                            article-png.jpg--}}
+                        <a class="custom-a" href="{{route('article.show', $article->slug)}}">
                         <div class="img-bg" style="background-image: url({{asset('/uploads/defaults/article-png.jpg')}});"></div>
                         </a>
+
                     </div>
 
 
@@ -101,6 +104,12 @@
 
 
     </div>
+    <div class="container m-5 ">
+
+            {{$articles->links()}}
+
+    </div>
+
 @endsection
 
 @section('script')
