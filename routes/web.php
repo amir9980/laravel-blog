@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 require __DIR__."/auth.php";
 
 
@@ -26,9 +27,6 @@ Route::prefix('admin')->group(function (){
 });
 
 
-Route::get('/', function () {
-    return view('main.home');
-});
-
+Route::get('/', [ArticleController::class, 'index']);
 
 
