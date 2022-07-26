@@ -26,7 +26,7 @@ class Article extends Model
         'tags'=>'json'
     ];
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
