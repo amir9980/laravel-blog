@@ -11,11 +11,21 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::orderBy("id", "desc")->get();
+        $articles = Article::latest()->paginate(10);
+
         $tops = Article::all()->where("likes", ">=", 1)->sortByDesc("likes")->take(10);
         return view('main.home', [
             'articles' => $articles,
             'tops' => $tops
         ]);
+    }
+
+    public function show($slug)
+    {
+        dd(Article::where("slug", $slug)->first());
+        return view("main.single_article", [
+            "article" => Article::where("slug", $slug)->first(),
+        ]);
+
     }
 }
