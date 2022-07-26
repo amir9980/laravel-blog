@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\UserController;
 */
 require __DIR__."/auth.php";
 
+require __DIR__.'/auth.php';
 
 Route::prefix('admin')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
@@ -26,7 +27,15 @@ Route::prefix('admin')->group(function (){
 });
 
 
+
 Route::get('/', [ArticleController::class, 'index']);
+
+// ======================== articles =============================
+Route::prefix("articles")->group(function () {
+
+    // ----------------------------- single article ----------
+    Route::get("/{slug}", [ArticleController::class, 'show'])->name('article.show');
+});
 
 
 
