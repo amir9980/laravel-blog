@@ -19,8 +19,7 @@ use App\Http\Controllers\Admin\CommentController;
 |
 */
 
-require __DIR__."/auth.php";
-
+require __DIR__.'/auth.php';
 
 Route::prefix('admin')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
