@@ -57,9 +57,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        if (auth()->id() != $user->id) {
+            return redirect()->back();
+        }
+        dd($user);
     }
 
     /**
@@ -89,13 +92,12 @@ class UserController extends Controller
     {
         $articles = $user->articles()->latest()->paginate(10);
 
-        return view('main.home', [
-            'articles' => $articles,
-        ]);
+        return view('main.home', compact('articles'));
     }
 
     public function profile(User $user)
     {
-        dd($user);
+        $articles = $user->articles()->latest()->paginate(10);
+        return view("main.profile", compact('articles', 'user'));
     }
 }

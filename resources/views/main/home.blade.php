@@ -1,6 +1,6 @@
 @extends('main.layouts.master')
 
-@section('title', 'خانه')
+@section('title', 'پروفایل')
 
 @section('content')
 

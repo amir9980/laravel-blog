@@ -244,3 +244,15 @@ body {
 .dropdown:hover>.dropdown-menu {
     display: block;
 }
+.social-list{
+    display:flex;
+    list-style:none;
+    justify-content:center;
+    padding:0;
+}
+
+.social-list li, .social-list a{
+    padding:10px;
+    color:#8E24AA;
+    font-size:19px;
+}
