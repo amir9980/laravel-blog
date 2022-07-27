@@ -23,7 +23,9 @@ class RoleSeeder extends Seeder
                 'title' => 'writer'
             ],
             [
-                'title' => 'admin'
+                'title' => 'watcher'
+            ],
+            ['title' => 'admin'
             ]
         ];
 
