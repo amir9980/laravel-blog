@@ -12,7 +12,7 @@
                             پروفایل
                         </a>
                         <div class="dropdown-menu profile-link" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route("user.articles", $user->username)}}">مقالات</a>
+                            <a class="dropdown-item" href="{{route("user.edit", $user->username)}}">ویرایش</a>
                             <hr>
                             <a class="dropdown-item text-danger" href="{{route('logout')}}">خروج</a>
                         </div>
@@ -72,6 +72,7 @@
             </a>
         </div>
     </section>
+    @if(request()->route()->getName() != 'user.profile')
 
     <nav class="navbar navbar-expand-sm navbar-bg" >
         <div class="container-fluid" >
@@ -109,5 +110,6 @@
             </div>
         </div>
     </nav>
+        @endif
 </div>
 

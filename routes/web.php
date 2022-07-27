@@ -51,7 +51,7 @@ Route::prefix("users")->group(function () {
     // ----------------------------- user articles -------------
     Route::get("/{user:username}/articles", [blogUserController::class, 'articles'])->name('user.articles');
     // ----------------------------- user edit page ------------
-    Route::get("/{user:username}/edit", [blogUserController::class, 'edit'])->name("user.edit");
+    Route::get("/{user:username}/edit", [blogUserController::class, 'edit'])->name("user.edit")->middleware("auth");
     // ----------------------------- user update profile -------
     Route::post("/{user:username}/update", [blogUserController::class, 'update'])->name("user.update");
 });
