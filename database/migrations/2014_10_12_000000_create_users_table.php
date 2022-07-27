@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('role_id')->default(1);
+            $table->integer('role_id')->default(1)->comment('1: user, 2: writer, 3: admin');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->boolean('is_active')->default(1);
             $table->string('profile_image')->nullable();
