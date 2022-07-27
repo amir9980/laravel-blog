@@ -69,6 +69,11 @@ class User extends Authenticatable
 
     public function bookmarks()
     {
-        return $this->belongsToMany(Article::class,'likes','user_id','article_id');
+        return $this->belongsToMany(Article::class,'bookmarks','user_id','article_id');
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class,'notifiable');
     }
 }

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->json('tags')->nullable();
             $table->boolean('is_active')->default(1);
+            $table->boolean('pined')->default(0);
             $table->timestamps();
         });
     }
