@@ -216,3 +216,31 @@ body {
     color: rgba(0, 160, 20, 0.85);
     max-width: 68%;
 }
+
+
+ .fa-heart:hover {
+     color: red;
+ }
+.fa.fa-heart {
+    color: red;
+}
+.dropdown>.profile-link {
+    display: block;
+    opacity: 0;
+}
+
+.dropdown:hover>.profile-link {
+    opacity: 1;
+    display: block;
+    transition: .9s;
+
+}
+
+.dropdown>.dropdown-toggle:active {
+
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
