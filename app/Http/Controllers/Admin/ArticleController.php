@@ -84,4 +84,18 @@ class ArticleController extends Controller
     {
         //
     }
+
+    public function status(Article $article)
+    {
+        $article->is_active = !$article->is_active;
+        $article->save();
+
+        return back()->with(['message'=>'done']);
+    }
+
+    public function comments(Article $article)
+    {
+        $comments = $article->comments()->paginate(5)->withQueryString();
+        return view('Admin.article.comments',compact('comments'));
+    }
 }

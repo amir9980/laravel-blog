@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{{--    <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet" />--}}
-    <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet" />
-    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {{--    <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet" />--}}
+    <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.rtl.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('panel/css/open-iconic-bootstrap.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('panel/css/admin.css')}}" />
+    <link rel="stylesheet" href="{{asset('panel/css/admin.css')}}"/>
 
     <title>@yield('title')</title>
 </head>
@@ -60,11 +60,14 @@
             class="col-12 col-md-2 bg-dark text-light collapse show"
             id="sidebar"
         >
-            <div class="py-2">منو اصلی</div>
             <ul class="nav flex-column px-3">
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-dashboard"></span>
                     <a href="#" class="nav-link my-1 w-100">داشبورد</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <span class="oi oi-person"></span>
+                    <a href="{{route('admin.user.index')}}" class="nav-link my-1 w-100">اعضا</a>
                 </li>
                 <li class="nav-item">
                     <div class="d-flex align-items-center">
@@ -81,11 +84,11 @@
                     <div class="collapse" id="articlesSubmenu">
                         <ul class="nav px-3">
                             <li class="nav-item">
-                                <a href="{{route('article.index')}}" class="nav-link my-1 w-100">مشاهده همه</a>
+                                <a href="{{route('admin.article.index')}}" class="nav-link my-1 w-100">مشاهده همه</a>
                             </li>
                             <li class="nav-item w-100">
                                 <a
-                                    href="{{route('article.create')}}"
+                                    href="{{route('admin.article.create')}}"
                                     class="nav-link my-1 w-100 collapsed"
 
                                 >ارسال مقاله
@@ -95,13 +98,6 @@
                     </div>
                 </li>
 
-            </ul>
-            <div>متفرقه</div>
-            <ul class="nav flex-column px-3">
-                <li class="nav-item d-flex align-items-center">
-                    <span class="oi oi-person"></span>
-                    <a href="#" class="nav-link my-1 w-100">اعضا</a>
-                </li>
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-comment-square"></span>
                     <a href="#" class="nav-link my-1 w-100">نظرات</a>
@@ -121,10 +117,6 @@
         </div>
     </div>
 </div>
-
-
-
-
 
 
 <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
