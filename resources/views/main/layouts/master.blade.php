@@ -26,7 +26,7 @@
                 <div class="py-0">
 
                     <div class="row me-1">
-                    @if(request()->route()->getName() != 'user.profile')
+                    @if(! in_array(request()->route()->getName(),['user.profile', 'register', 'login']))
 
                         <!-- sidebar -->
                     @include("main.layouts.includes.sidebar")
