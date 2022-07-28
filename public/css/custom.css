@@ -374,3 +374,6 @@ body {
 .button-none {
     border: none;background:none;
 }
+.auth-icon {
+    margin-top: 23px;
+}
