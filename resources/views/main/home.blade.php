@@ -20,8 +20,7 @@
 
                                 <a class="custom-a" href="{{route("user.profile", $user->username)}}">
                                     <span>
-{{--                                        {{$user->name}}--}}
-                                        {{$article->id}}
+                                        {{$user->name}}
                                     </span>
                                     <br>
                                     <div class="mt-1">
