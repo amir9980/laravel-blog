@@ -7,6 +7,8 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
+
 class UserController extends Controller
 {
     public function index()
@@ -19,6 +21,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        Gate::authorize('role',$user);
         $roles = Role::all();
         return view('Admin.user.edit',compact('user','roles'));
     }
@@ -29,7 +32,7 @@ class UserController extends Controller
             'role'=>'required|string|in:user,writer,watcher,admin'
         ]);
 
-        //gate
+        Gate::authorize('role',$user);
 
         $role = Role::query()->where('title','=',$request->role)->firstOrFail();
         $user->role_id = $role->id;
@@ -41,6 +44,8 @@ class UserController extends Controller
 
     public function status(User $user)
     {
+        Gate::authorize('status',$user);
+
         $user->is_active = !$user->is_active;
         $user->save();
 

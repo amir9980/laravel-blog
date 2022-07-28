@@ -28,19 +28,21 @@
                     </td>
                     <td>{{\Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%A, %d %B %y')}}</td>
                     <td class="d-flex justify-content-around">
-                        @if($comment->is_active)
-                            <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-danger">غیر فعال سازی</button>
-                            </form>
-                        @else
-                            <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
-                            </form>
-                        @endif
+                        @can('status',$comment)
+                            @if($comment->is_active)
+                                <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-sm btn-danger">غیر فعال سازی</button>
+                                </form>
+                            @else
+                                <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
+                                </form>
+                            @endif
+                        @endcan
                     </td>
                 </tr>
             @endforeach

@@ -22,11 +22,11 @@ use App\Http\Controllers\Admin\CommentController;
 require __DIR__."/auth.php";
 
 
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
     Route::resource('article',adminArticleController::class,['as'=>'admin']);
     Route::put('/article/{article:slug}/status',[adminArticleController::class,'status'])->name('admin.article.status');
-    Route::put('/article/{article:slug}/comments',[adminArticleController::class,'comments'])->name('admin.article.comments');
+    Route::get('/article/{article:slug}/comments',[adminArticleController::class,'comments'])->name('admin.article.comments');
     Route::get('/user/index',[UserController::class,'index'])->name('admin.user.index');
     Route::get('/user/{user:username}/articles',[UserController::class,'articles'])->name('admin.user.articles');
     Route::get('/user/{user:username}/comments',[UserController::class,'comments'])->name('admin.user.comments');
