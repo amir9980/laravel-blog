@@ -72,16 +72,27 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class,'role_id');
     }
 
-    public function bookmarks(){
+    public function bookmarks()
+    {
         return $this->belongsToMany(Bookmark::class, "bookmarks", "user_id", "article_id");
     }
 
-    public function likes(){
-        return $this->belongsToMany(Like::class, "likes", "user_id", "article_id");
+    public function user_bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, "user_id", "id");
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(Like::class, "likes", "user_id", "article_id");
+    }
+    public function user_likes()
+    {
+        return $this->hasMany(Like::class, "user_id");
+    }
     public function notifications()
     {
         return $this->morphMany(Notification::class,'notifiable');
     }
+
 }
