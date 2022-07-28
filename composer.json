@@ -11,6 +11,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "morilog/jalali": "3.*",
         "ybazli/faker": "^1.0"
     },
     "require-dev": {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArticleController as adminArticleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Blog\UserController as blogUserController;
+use App\Http\Controllers\Admin\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +24,16 @@ require __DIR__."/auth.php";
 
 Route::prefix('admin')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
-    Route::resource('article',adminArticleController::class);
+    Route::resource('article',adminArticleController::class,['as'=>'admin']);
+    Route::put('/article/{article:slug}/status',[adminArticleController::class,'status'])->name('admin.article.status');
+    Route::put('/article/{article:slug}/comments',[adminArticleController::class,'comments'])->name('admin.article.comments');
     Route::get('/user/index',[UserController::class,'index'])->name('admin.user.index');
-    Route::get('/user/edit',[UserController::class,'index'])->name('admin.user.edit');
-    Route::put('/user/update',[UserController::class,'index'])->name('admin.user.update');
+    Route::get('/user/{user:username}/articles',[UserController::class,'articles'])->name('admin.user.articles');
+    Route::get('/user/{user:username}/comments',[UserController::class,'comments'])->name('admin.user.comments');
+    Route::get('/user/{user:username}/edit',[UserController::class,'edit'])->name('admin.user.edit');
+    Route::put('/user/{user:username}/update',[UserController::class,'update'])->name('admin.user.update');
+    Route::put('/user/{user:username}/status',[UserController::class,'status'])->name('admin.user.status');
+    Route::put('/comment/{comment}/status',[CommentController::class,'status'])->name('admin.comment.status');
 });
 
 
@@ -43,6 +51,7 @@ Route::prefix("articles")->group(function () {
     Route::match(['post', 'delete'],"/{article:slug}/like", [ArticleController::class, 'like'])->name('article.like');
 
 });
+
 
 // ======================== users ===============================
 Route::prefix("users")->group(function () {
