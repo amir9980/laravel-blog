@@ -1,12 +1,9 @@
 @extends('main.layouts.master')
-@section('title', 'ثبت نام')
+@section('title', 'ورود')
 @section('style')
 <style>
     body {
         background-color: #eee;
-    }
-    .auth-icon {
-        margin-top: 23px;
     }
 </style>
 @endsection
@@ -21,7 +18,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-sm-10 col-lg-7 col-xl-5 order-2 order-lg-1">
 
-                                <h3 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 Tanha">ثبت نام</h3>
+                                <h3 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 Tanha">ورود</h3>
 
                                 <form class="mx-1 mx-md-4" action="{{route('register')}}" method="post">
                                     @csrf
@@ -65,7 +62,7 @@
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label float-end Tanha" for="form3Example4c">رمز عبور</label>
+                                            <label class="form-label float-end Tanha" for="form3Example4c">رمزعبور</label>
                                             <input  required type="password" name="password" id="form3Example4c" class="form-control @error('password') is-invalid @enderror " />
                                             @error('password')
                                                 <strong class="text-danger vazir-rb float-end mt-1" dir="rtl" style="font-weight: 500;font-size: 15px">
@@ -100,7 +97,7 @@
                             </div>
                             <div class="col-md-10 col-sm-10 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                <img src="{{asset('/uploads/defaults/register.jpg')}}"
                                      class="img-fluid" alt="Sample image">
 
                             </div>
@@ -112,62 +109,3 @@
     </div>
 </section>
 @endsection
-{{--<x-guest-layout>--}}
-{{--    <x-auth-card>--}}
-{{--        <x-slot name="logo">--}}
-{{--            <a href="/">--}}
-{{--                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />--}}
-{{--            </a>--}}
-{{--        </x-slot>--}}
-
-{{--        <!-- Validation Errors -->--}}
-{{--        <x-auth-validation-errors class="mb-4" :errors="$errors" />--}}
-
-{{--        <form method="POST" action="{{ route('register') }}">--}}
-{{--            @csrf--}}
-
-{{--            <!-- Name -->--}}
-{{--            <div>--}}
-{{--                <x-label for="name" :value="__('Name')" />--}}
-
-{{--                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />--}}
-{{--            </div>--}}
-
-{{--            <!-- Email Address -->--}}
-{{--            <div class="mt-4">--}}
-{{--                <x-label for="email" :value="__('Email')" />--}}
-
-{{--                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />--}}
-{{--            </div>--}}
-
-{{--            <!-- Password -->--}}
-{{--            <div class="mt-4">--}}
-{{--                <x-label for="password" :value="__('Password')" />--}}
-
-{{--                <x-input id="password" class="block mt-1 w-full"--}}
-{{--                                type="password"--}}
-{{--                                name="password"--}}
-{{--                                required autocomplete="new-password" />--}}
-{{--            </div>--}}
-
-{{--            <!-- Confirm Password -->--}}
-{{--            <div class="mt-4">--}}
-{{--                <x-label for="password_confirmation" :value="__('Confirm Password')" />--}}
-
-{{--                <x-input id="password_confirmation" class="block mt-1 w-full"--}}
-{{--                                type="password"--}}
-{{--                                name="password_confirmation" required />--}}
-{{--            </div>--}}
-
-{{--            <div class="flex items-center justify-end mt-4">--}}
-{{--                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">--}}
-{{--                    {{ __('Already registered?') }}--}}
-{{--                </a>--}}
-
-{{--                <x-button class="ml-4">--}}
-{{--                    {{ __('Register') }}--}}
-{{--                </x-button>--}}
-{{--            </div>--}}
-{{--        </form>--}}
-{{--    </x-auth-card>--}}
-{{--</x-guest-layout>--}}
