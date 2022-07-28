@@ -1,6 +1,33 @@
 body {
     background-color: #DDDDDD;
 }
+@font-face {
+    font-family: 'Vazirmatn RD';
+    src: url('/fonts/Vazir/Vazirmatn-RD[wght].woff2') format('woff2 supports variations'),
+    url('/fonts/Vazir/Vazirmatn-RD[wght].woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Tanha';
+    /*src: url('/fonts/Tanha/Tanha.woff2') format('woff2 supports variations'),*/
+    /*url('/fonts/Tanha/Tanha.woff2') format('woff2-variations'),*/
+    src: url('/fonts/Tanha/Tanha.eot') format('embedded-opentype'),
+    url('/fonts/Tanha/Tanha.woff2') format('woff2'),
+    url('/fonts/Tanha/Tanha.woff') format('woff'),
+    url('/fonts/Tanha/Tanha.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.vazir-rb {
+    font-family: 'Vazirmatn RD';
+}
+.Tanha {
+    font-family: 'Tanha';
+}
 .navbar-brand {
     width: 100px;
     height: 100px;
@@ -255,4 +282,92 @@ body {
     padding:10px;
     color:#8E24AA;
     font-size:19px;
+}
+#comments {
+    background-color:#FFFFFF;
+}
+
+#comments form {
+    margin-bottom:30px;
+}
+
+#comments .btn {
+    margin-top:7px;
+}
+
+#comments form fieldset {
+    clear:both;
+}
+
+#comments form textarea {
+    height:100px;
+}
+
+#comments .media {
+    border-top:1px dashed #DDDDDD;
+    padding:20px 0;
+    margin:0;
+}
+
+#comments .media > .pull-left {
+    margin-right:20px;
+}
+
+#comments .media img {
+    max-width:100px;
+}
+
+#comments .media h4 {
+    margin:0 0 10px;
+}
+
+#comments .media h4 span {
+    font-size:14px;
+    float:right;
+    color:#999999;
+}
+
+#comments .media p {
+    margin-bottom:15px;
+    text-align:justify;
+}
+
+#comments .media-detail {
+    margin:0;
+}
+
+#comments .media-detail li {
+    color:#AAAAAA;
+    font-size:12px;
+    padding-right: 10px;
+    font-weight:600;
+}
+
+#comments .media-detail a:hover {
+    text-decoration:underline;
+}
+
+#comments .media-detail li:last-child {
+    padding-right:0;
+}
+
+#comments .media-detail li i {
+    color:#666666;
+    font-size:15px;
+    margin-right:10px;
+}
+.tops-title
+{
+    color: #363636;
+    font-size: .9rem;
+    font-weight: 500;
+    margin-top: -4px;
+    min-width: 250px;
+    max-width: 310px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.Posts-info {
+    max-width: 300px;
 }
