@@ -216,3 +216,43 @@ body {
     color: rgba(0, 160, 20, 0.85);
     max-width: 68%;
 }
+
+
+ .fa-heart:hover {
+     color: red;
+ }
+.fa.fa-heart {
+    color: red;
+}
+.dropdown>.profile-link {
+    display: block;
+    opacity: 0;
+}
+
+.dropdown:hover>.profile-link {
+    opacity: 1;
+    display: block;
+    transition: .9s;
+
+}
+
+.dropdown>.dropdown-toggle:active {
+
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+.social-list{
+    display:flex;
+    list-style:none;
+    justify-content:center;
+    padding:0;
+}
+
+.social-list li, .social-list a{
+    padding:10px;
+    color:#8E24AA;
+    font-size:19px;
+}

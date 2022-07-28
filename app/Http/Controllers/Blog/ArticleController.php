@@ -13,19 +13,25 @@ class ArticleController extends Controller
     {
         $articles = Article::latest()->paginate(10);
 
-        $tops = Article::all()->where("likes", ">=", 1)->sortByDesc("likes")->take(10);
         return view('main.home', [
             'articles' => $articles,
-            'tops' => $tops
+
         ]);
     }
 
-    public function show($slug)
+    public function show(Article $article)
     {
-        dd(Article::where("slug", $slug)->first());
-        return view("main.single_article", [
-            "article" => Article::where("slug", $slug)->first(),
-        ]);
+        dd($article);
+        return view("main.single_article", compact('article'));
 
+    }
+
+    public function bookmark(Request $request, Article $article)
+    {
+        dd($request->method(),$article->slug);
+    }
+    public function like(Request $request, Article $article)
+    {
+        dd($request->method(),$article->slug);
     }
 }

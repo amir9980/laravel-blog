@@ -1,17 +1,34 @@
 
 <div class="main-header">
-    <section class="navbar navbar-light container-md">
-        <div class="col-6 mr-3 ">
+    <section class="navbar navbar-light container-md ">
+
+        <div class="col-6 mr-3 justify-content-between">
+            @auth
+                @php
+                $user = \App\Models\User::find(auth()->id());
+                @endphp
+                    <div class="dropdown ms-4 float-start" >
+                        <a class="btn btn-primary text-decoration-none" href="{{route('user.profile', $user->username)}}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            پروفایل
+                        </a>
+                        <div class="dropdown-menu profile-link" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{route("user.edit", $user->username)}}">ویرایش</a>
+                            <hr>
+                            <a class="dropdown-item text-danger" href="{{route('logout')}}">خروج</a>
+                        </div>
+                    </div>
+
+            @else
             <a class="btn decoration-none register-button" href="{{route('register')}}">
                 <small>ثبت نام</small>
             </a>
             <a class="link-muted decoration-none login-nav-link"  href="{{route('login')}}">
                 <small>ورود</small>
             </a>
-
-            <span class="fa fa-search  modal-search-btn"   data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-            </span>
+            @endauth
+<div>
+            <span class="fa fa-search  modal-search-btn"   data-bs-toggle="modal" data-bs-target="#exampleModal"></span>
+</div>
         </div>
 
 
@@ -45,14 +62,17 @@
     </div>
 
 
-        <div class="col-3 col-xs-12 d-flex logo-section" >
-            <span class="mt-4 logo-text" >
+        <div class="col-3 col-xs-12 d-flex logo-section">
+            <a class="nav-link d-flex" href="{{route("home")}}">
+            <span class="mt-4 logo-text">
                 Johar
             </span>
-            <img src="{{asset('/uploads/defaults/logo.png')}}" class="navbar-brand pull-right" alt="johar.ir">
+                <img src="{{asset('/uploads/defaults/logo.png')}}" class="navbar-brand pull-right" alt="johar.ir">
 
+            </a>
         </div>
     </section>
+    @if(request()->route()->getName() != 'user.profile')
 
     <nav class="navbar navbar-expand-sm navbar-bg" >
         <div class="container-fluid" >
@@ -90,5 +110,6 @@
             </div>
         </div>
     </nav>
+        @endif
 </div>
 
