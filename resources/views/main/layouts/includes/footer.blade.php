@@ -6,7 +6,7 @@
     function apply(slug, url, method) {
         $.ajax({
             method: 'POST',
-            url: 'articles/' + slug + '/' + url,
+            url: '/articles/' + slug + '/' + url,
             dataType: 'json',
             data: {_token:`{{ csrf_token() }}`,_method:method},
             success: function (response) {
