@@ -44,9 +44,8 @@
 
 @include("main.layouts.includes.footer")
 
-    <script src="/bootstrap/js/bootstrap.min.js" ></script>
-    <script src="/js/jquery-3.6.0.min.js"></script>
-        <script src="/js/custom.js"></script>
-    @yield('script')
+
+
+        @yield('script')
 </body>
 </html>

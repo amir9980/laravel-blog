@@ -45,5 +45,12 @@ class Article extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, 'article_id');
+    }
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'article_id');
+    }
 }
