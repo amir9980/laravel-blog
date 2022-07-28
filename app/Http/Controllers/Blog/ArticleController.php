@@ -16,28 +16,49 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::latest()->paginate(10);
-
-        return view('main.home', [
-            'articles' => $articles,
-
-        ]);
+        if (auth()->check()){
+            $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
+            $likes = auth()->user()->user_likes->pluck('article_id')->toArray();
+        } else{
+            $bookmarks = [];
+            $likes = [];
+        }
+        return view('main.home', compact('articles', 'bookmarks', 'likes'));
     }
 
     public function show(Article $article)
     {
         dd($article);
-        return view("main.single_article", compact('article'));
+        $articles = Article::latest()->paginate(10);
+        if (auth()->check()){
+            $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
+            $likes = auth()->user()->user_likes->pluck('article_id')->toArray();
+        } else{
+            $bookmarks = [];
+            $likes = [];
+        }
+        return view('main.home', compact('articles', 'bookmarks', 'likes'));
 
     }
 
     public function bookmark(Request $request, Article $article)
     {
+        if ($request->method() == "POST") {
+            $request->user()->bookmarks()->attach([$article->id]);
 
-
+        } elseif ($request->method() == "DELETE") {
+            $request->user()->bookmarks()->detach([$article->id]);
+        };
     }
+
     public function like(Request $request, Article $article)
     {
+        if ($request->method() == "POST") {
+            $request->user()->likes()->attach([$article->id]);
 
+        } elseif ($request->method() == "DELETE") {
+            $request->user()->likes()->detach([$article->id]);
+        };
 
     }
 

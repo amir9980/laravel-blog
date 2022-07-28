@@ -5,6 +5,9 @@
 @section('content')
 
 
+            <div class=" mt-5">
+
+            </div>
             @foreach($articles as $article)
                 @php
                     $user = $article->user;
@@ -17,7 +20,8 @@
 
                                 <a class="custom-a" href="{{route("user.profile", $user->username)}}">
                                     <span>
-                                        {{$user->name}}
+{{--                                        {{$user->name}}--}}
+                                        {{$article->id}}
                                     </span>
                                     <br>
                                     <div class="mt-1">
@@ -38,10 +42,11 @@
                         </a>
                         </div>
                         <div class="me-2 ms-3 mt-1 float-start" >
-                            <i  class="fa-thin fa-bookmark articles-bookmark" id="{{$article->slug}}" onclick="bookmark(this)"></i>
+                            <i  class=" @if(in_array($article->id,$bookmarks)) fa fa-bookmark articles-bookmark @else fa-thin fa-bookmark articles-bookmark @endif" id="{{$article->slug}}" onclick="bookmark(this)"></i>
                         </div>
                         <div class="me-2 ms-4 mt-1 float-start" >
-                                <i class="fa-thin fa-heart articles-bookmark" id="{{$article->slug}}" onclick="heart(this)"></i>
+
+                                <i class=" @if(in_array($article->id,$likes)) fa fa-heart articles-bookmark @else fa-thin fa-heart articles-bookmark @endif" id="{{$article->slug}}" onclick="heart(this)"></i>
                             </div>
                         </div>
 
