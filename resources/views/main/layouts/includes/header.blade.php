@@ -3,33 +3,40 @@
     <section class="navbar navbar-light container-md ">
 
         <div class="col-6 mr-3 justify-content-between">
+            <div class="dropdown ms-4 float-start" >
             @auth
                 @php
                 $user = \App\Models\User::find(auth()->id());
                 @endphp
-                    <div class="dropdown ms-4 float-start" >
+
                         <a class="btn btn-primary text-decoration-none" href="{{route('user.profile', $user->username)}}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             پروفایل
                         </a>
                         <div class="dropdown-menu profile-link" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{route("user.edit", $user->username)}}">ویرایش</a>
                             <hr>
-                            <a class="dropdown-item text-danger" href="{{route('logout')}}">خروج</a>
+                            <form action="{{route('logout')}}" method="post" class="d-none" id="logout">
+                                @csrf
+                            </form>
+                            <button type="submit" form="logout" class="dropdown-item text-danger" >خروج</button>
                         </div>
-                    </div>
+
 
             @else
-            <a class="btn decoration-none register-button" href="{{route('register')}}">
-                <small>ثبت نام</small>
-            </a>
-            <a class="link-muted decoration-none login-nav-link"  href="{{route('login')}}">
-                <small>ورود</small>
-            </a>
+
+                    <a class="btn decoration-none register-button" href="{{route('register')}}">
+                        <small>ثبت نام</small>
+                    </a>
+                    <a class="link-muted decoration-none login-nav-link"  href="{{route('login')}}">
+                        <small>ورود</small>
+                    </a>
             @endauth
-<div>
+            </div>
+
+        <div>
             <span class="fa fa-search  modal-search-btn"   data-bs-toggle="modal" data-bs-target="#exampleModal"></span>
-</div>
         </div>
+    </div>
 
 
 <!-- Button trigger modal -->
