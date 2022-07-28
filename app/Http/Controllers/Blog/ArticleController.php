@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Bookmark;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -59,7 +60,33 @@ class ArticleController extends Controller
         } elseif ($request->method() == "DELETE") {
             $request->user()->likes()->detach([$article->id]);
         };
-
     }
 
+    public function comment_store(Request $request, Article $article)
+    {
+        if (! auth()->check()) {
+            return Redirect::route("login")->withErrors(['redirect'=>'ابتدا وارد شوید']);
+        }
+
+
+        $validate_data = $request->validate([
+            'title' => 'required|max:65',
+            'body' => 'required|max:500'
+        ]);
+//        dd($validate_data);
+        Comment::create([
+            'article_id' => $article->id,
+            'user_id' => auth()->id(),
+            'title' => $validate_data['title'],
+            'body' => $validate_data['body']
+            ]);
+        return \redirect()->back()->withErrors(['commented' => 'نظر شما ثبت شد']);
+//        dd($request, $article);
+    }
+
+    public function comment_destroy(Comment $comment)
+    {
+        $comment->delete();
+        return \redirect()->back()->withErrors(['comment_destroy' => 'دیدگاه مورد نظر حذف شد']);
+    }
 }

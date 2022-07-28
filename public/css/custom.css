@@ -371,3 +371,6 @@ body {
 .Posts-info {
     max-width: 300px;
 }
+.button-none {
+    border: none;background:none;
+}

@@ -62,40 +62,75 @@
 
         <div class="col-8  ms-auto row " >
             <div class="comment-box text-center">
-                <form action="#" id="algin-form" class="text-right row" method="post">
+                @error('commented')
+                    <div class="alert alert-success">
+                        {{ $message }}
+                    </div>
+                @enderror
+                @error('comment_destroy')
+                    <div class="alert alert-success">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <form action="{{route('comment.store', $article->slug)}}" id="algin-form" class="text-right row" method="post">
                     @csrf
+                    <div class="form-group col-12">
 
-                    <div class="form-group col-12" >
-                        <label class="float-end" for="message">:دیدگاه شما</label>
-                        <textarea name="msg" id=""msg cols="30" rows="5" class="form-control" style="background-color: #f6f6f6;"></textarea>
+                        <label class="float-end mb-1" for="title">عنوان</label>
+                        <input dir="rtl" class="float-end form-control" id="title" name="title" type="text" >
+
+                    </div>
+                    @error('title')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                    @enderror
+
+                    <div class="form-group col-12 mt-4" >
+                        <label class="float-end Tanha mb-1" for="message">:دیدگاه شما</label>
+                        <textarea name="body" id="message" cols="30" dir="rtl" rows="5" class="form-control vazir-rb" ></textarea>
+                        @error('body')
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     <div class="form-group col-12">
-                        <button type="submit" id="post" class="btn btn-outline-primary w-25">ارسال</button>
+                        <button type="submit" id="post" class="btn btn-outline-primary w-25 float-start">ارسال</button>
                     </div>
                 </form>
             </div>
         </div
+
     @if($article->comments->count() != 0)
 
         <div class="col-1 ">
             <h3 class="text-end " dir="rtl">{{$article->comments->count()}} نظر </h3>
 
 
-            @foreach($article->comments as $comment)
+            @foreach($article->comments->sortByDesc("id") as $comment)
                 <div class="media col-10">
                     <a class="pull-left" href="#"></a>
                     <div class="media-body  float-end">
-                        <h4 class="media-heading text-end">{{$comment->user()->first()->name}}</h4>
+                        <h6 class="media-heading text-end"><a class="text-decoration-none text-black-50" href="{{route('user.profile', $comment->user()->first()->username)}}">{{$comment->user()->first()->name}}</a></h6>
+                        <h5 class="text-end mt-3">{{$comment->title}}</h5>
                         <p dir="rtl">{{$comment->body}}</p>
 
 
                     </div>
 
                 </div>
-                <ul class="list-unstyled list-inline media-detail text-start col-10">
+                <ul class="list-unstyled list-inline media-detail text-start col-10 d-flex">
                     <li class="text-start">{{$comment->created_at}}<i class="fa fa-calendar"></i></li>
-                    {{--                            <li class="pull-left" onclick="like(this, `{{$comment->id}}`)"><span>{{$comment->likes}}</span><i class="fa fa-thumbs-up {{(auth()->check() and in_array(auth()->id(),$comment->likes()->get()->pluck('user_id')->toArray()))?'text-success':''}}" ></i></li>--}}
+
+                    @if(auth()->check() and auth()->id() == $comment->user_id)
+                        <form class="d-none" id="destroy_comment" action="{{route('comment.destroy', $comment->id)}}" method="post">
+                            @csrf
+                            @method('delete')
+                        </form>
+                        <li><button type="submit"  form="destroy_comment" class="text-decoration-none button-none text-danger vazir-rb">حذف</button></li>
+                    @endif
                 </ul>
             @endforeach
 

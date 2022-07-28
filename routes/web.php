@@ -49,6 +49,10 @@ Route::prefix("articles")->group(function () {
     Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
     // ----------------------------- single like -------------
     Route::match(['post', 'delete'],"/{article:slug}/like", [ArticleController::class, 'like'])->name('article.like');
+    // ----------------------------- create comment ----------
+    Route::post('/{article:slug}/comment', [ArticleController::class, 'comment_store'])->name('comment.store');
+    // ----------------------------- destroy comment----------
+    Route::delete('/{comment}',[ArticleController::class, 'comment_destroy'])->name('comment.destroy');
 
 });
 
