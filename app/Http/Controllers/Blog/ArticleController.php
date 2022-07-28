@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Bookmark;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
 
 class ArticleController extends Controller
 {
@@ -28,10 +32,13 @@ class ArticleController extends Controller
 
     public function bookmark(Request $request, Article $article)
     {
-        dd($request->method(),$article->slug);
+
+
     }
     public function like(Request $request, Article $article)
     {
-        dd($request->method(),$article->slug);
+
+
     }
+
 }
