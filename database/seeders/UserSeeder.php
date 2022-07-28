@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -19,6 +20,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        User::insert([
+            [
+                'name'=>'امیر',
+                'username'=>'amir',
+                'email'=>'amir@yahoo.com',
+                'password'=>bcrypt('11111111'),
+                'role_id'=>4,
+                'remember_token'=>Str::random(10)
+            ]
+        ]);
         User::factory()
             ->has(Profile::factory()->count(1))
             ->has(Article::factory()

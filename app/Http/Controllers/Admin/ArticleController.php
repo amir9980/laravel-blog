@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -59,7 +60,9 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        Gate::authorize('update',$article);
+
+        //view
     }
 
     /**

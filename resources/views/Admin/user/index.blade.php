@@ -58,7 +58,7 @@
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endif
-                        <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary" title="ویرایش"><span class="oi oi-cog"></span></a>
+                        @can('role',$user) <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary" title="ویرایش"><span class="oi oi-cog"></span></a> @endcan
                         <a href="{{route('admin.user.articles',$user->username)}}" class="btn btn-sm btn-secondary" title="مشاهده مقالات"><span class="oi oi-list"></span></a>
                         <a href="{{route('admin.user.comments',$user->username)}}" class="btn btn-sm btn-secondary" title="مشاهده نظرات"><span
                                 class="oi oi-comment-square"></span></a>
