@@ -30,10 +30,13 @@
                         </div>
 
                         <ul class="social-list">
-                            @foreach($user->profile->social_media as $key=>$value)
+                            @if(! is_null($user->profile->scocial_media))
 
-                                <li><a  href="?{{$key.'/'.$value}}"><i class="fa fa-{{$key}}"></i></a></li>
-                            @endforeach
+                                @foreach($user->profile->social_media as $key=>$value)
+
+                                    <li><a  href="?{{$key.'/'.$value}}"><i class="fa fa-{{$key}}"></i></a></li>
+                                @endforeach
+                            @endif
 {{--                            <li><i class="fa fa-dribbble"></i></li>--}}
 {{--                            <li><i class="fa fa-instagram"></i></li>--}}
 {{--                            <li><i class="fa fa-linkedin"></i></li>--}}
@@ -90,11 +93,13 @@
                     </a>
                 </div>
                 <div class="me-2 ms-3 mt-1 float-start" >
-                    <i  class="fa-thin fa-bookmark articles-bookmark" id="{{$article->slug}}" onclick="bookmark(this)"></i>
+                    <i  class=" @if(in_array($article->id,$bookmarks)) fa fa-bookmark articles-bookmark @else fa-thin fa-bookmark articles-bookmark @endif" id="{{$article->slug}}" onclick="bookmark(this)"></i>
                 </div>
                 <div class="me-2 ms-4 mt-1 float-start" >
-                    <i class="fa-thin fa-heart articles-bookmark" id="{{$article->slug}}" onclick="heart(this)"></i>
+
+                    <i class=" @if(in_array($article->id,$likes)) fa fa-heart articles-bookmark @else fa-thin fa-heart articles-bookmark @endif" id="{{$article->slug}}" onclick="heart(this)"></i>
                 </div>
+
             </div>
 
             <div class="col-7 col-lg-8  col-sm-6 col-md-7 pt-2 pb-2 pe-0" >

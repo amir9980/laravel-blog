@@ -97,7 +97,14 @@ class UserController extends Controller
 
     public function profile(User $user)
     {
+        if (auth()->check()){
+            $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
+            $likes = auth()->user()->user_likes->pluck('article_id')->toArray();
+        } else{
+            $bookmarks = [];
+            $likes = [];
+        }
         $articles = $user->articles()->latest()->paginate(10);
-        return view("main.profile", compact('articles', 'user'));
+        return view("main.profile", compact('articles', 'user', 'bookmarks', 'likes'));
     }
 }
