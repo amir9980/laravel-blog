@@ -11,7 +11,7 @@
 
         <div class="row d-flex justify-content-center">
 
-            <div class="col-md-7">
+            <div class="col-10">
 
                 <div class="card p-3 py-4" style="background:none;border:none">
 

@@ -28,7 +28,6 @@ class ArticleController extends Controller
 
     public function show(Article $article)
     {
-        dd($article);
         $articles = Article::latest()->paginate(10);
         if (auth()->check()){
             $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
@@ -37,7 +36,8 @@ class ArticleController extends Controller
             $bookmarks = [];
             $likes = [];
         }
-        return view('main.home', compact('articles', 'bookmarks', 'likes'));
+        $user = $article->user;
+        return view('main.single_article', compact('article','user', 'bookmarks', 'likes'));
 
     }
 
