@@ -52,7 +52,7 @@
                     <div class="col-7 col-lg-8  col-sm-6 col-md-7 pt-2 pb-2 pe-0" >
                         <div class="h-75">
                         <a class="custom-a" href="{{route('article.show', $article->slug)}}">
-                            <h5 class="tanha">{{$article->title}}</h5>
+                            <h5 class="Tanha">{{$article->title}}</h5>
                         </a>
                             <p class="vazir-rb">{{$article->description}}</p>
                         </div>
