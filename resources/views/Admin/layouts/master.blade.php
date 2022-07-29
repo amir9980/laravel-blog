@@ -40,16 +40,17 @@
             </li>
         </ul>
 
-        <div class="me-3">
+        <div class="me-3 d-flex">
             <button type="button" class="btn btn-sm btn-primary">
                 ایمیل های جدید <span class="badge bg-light text-dark">9</span>
             </button>
-            <button type="button" class="btn btn-sm btn-success">
+            <button type="button" class="btn btn-sm btn-success me-2">
                 نظرات جدید <span class="badge bg-light text-dark">9</span>
             </button>
-            <button type="button" class="btn btn-sm btn-danger">
-                خروج <span class="badge bg-light text-dark">9</span>
-            </button>
+            <form action="{{route('logout')}}" method="POST">
+                @csrf
+            <button type="submit" class="btn btn-sm btn-danger">خروج</button>
+            </form>
         </div>
     </div>
 </nav>
@@ -101,7 +102,7 @@
 
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-comment-square"></span>
-                    <a href="#" class="nav-link my-1 w-100">نظرات</a>
+                    <a href="{{route('admin.comment.index')}}" class="nav-link my-1 w-100">نظرات</a>
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-dashboard"></span>
