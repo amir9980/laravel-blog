@@ -62,6 +62,7 @@ class UserController extends Controller
         Gate::authorize('status',$user);
 
         $user->is_active = !$user->is_active;
+        $user->notifications()->delete();
         $user->save();
 
         return back()->with(['message'=>'done']);
