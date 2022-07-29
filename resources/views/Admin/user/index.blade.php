@@ -3,8 +3,45 @@
 @section('title','کاربران')
 
 @section('content')
+    <div>
+        <h4>جستجو</h4>
+        <form action="#">
+            <div class="row align-items-center">
+                <div class="col-md-2 form-group">
+                    <label>نام کاربری</label>
+                    <input class="form-control" name="username" type="text">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>وضعیت</label>
+                    <select name="status" class="form-control">
+                        <option value="">انتخاب کنید</option>
+                        <option value="active">فعال</option>
+                        <option value="inactive">غیرفعال</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>نقش</label>
+                    <select name="role" class="form-control">
+                        <option value="">انتخاب کنید</option>
+                        <option value="user">کاربر</option>
+                        <option value="writer">نویسنده</option>
+                        <option value="watcher">بازرس</option>
+                        <option value="admin">مدیر</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>آخرین تاریخ ثبت</label>
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker">
+                </div>
+                <div class="col-md-2 form-group">
+                    <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
+                </div>
+            </div>
 
-    <table class="table table-bordered table-striped text-center">
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped text-center mt-5">
         <thead>
         <th>ردیف</th>
         <th>نام کاربری</th>
@@ -58,9 +95,14 @@
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endif
-                        @can('role',$user) <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary" title="ویرایش"><span class="oi oi-cog"></span></a> @endcan
-                        <a href="{{route('admin.user.articles',$user->username)}}" class="btn btn-sm btn-secondary" title="مشاهده مقالات"><span class="oi oi-list"></span></a>
-                        <a href="{{route('admin.user.comments',$user->username)}}" class="btn btn-sm btn-secondary" title="مشاهده نظرات"><span
+                        @can('role',$user)
+                            <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
+                               title="ویرایش"><span class="oi oi-cog"></span></a>
+                        @endcan
+                        <a href="{{route('admin.user.articles',$user->username)}}" class="btn btn-sm btn-secondary"
+                           title="مشاهده مقالات"><span class="oi oi-list"></span></a>
+                        <a href="{{route('admin.user.comments',$user->username)}}" class="btn btn-sm btn-secondary"
+                           title="مشاهده نظرات"><span
                                 class="oi oi-comment-square"></span></a>
                     </td>
                 </tr>
@@ -76,4 +118,11 @@
     <div class="d-flex justify-content-center">
         {{$users->links()}}
     </div>
+@endsection
+
+
+@section('script')
+
+
+
 @endsection

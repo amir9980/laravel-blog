@@ -8,12 +8,27 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
+use Morilog\Jalali\Jalalian;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::withCount(['comments','articles'=>function(Builder $query){
+        $request->validate([
+            'username'=>'nullable|string|max:100',
+            'status'=>'nullable|string|in:active,inactive',
+            'role'=>'nullable|string|in:user,writer,watcher,admin',
+            'end_date'=>'nullable|date'
+        ]);
+
+        $users = User::query();
+
+        $users = empty($request->title) ? $users : $users->where('username','LIKE',$request->username);
+        $users = empty($request->status) ? $users : $users->where('is_active','=',$request->status == 'active');
+        $users = empty($request->role) ? $users : $users->where('role_id','=',Role::query()->whereTitle($request->role)->first()->id);
+        $users = empty($request->end_date) ? $users : $users->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+
+        $users = $users->withCount(['comments','articles'=>function(Builder $query){
         }])->paginate(5)->withQueryString();
 
         return view('Admin.user.index',compact('users'));

@@ -19,9 +19,10 @@ use App\Http\Controllers\Admin\CommentController;
 |
 */
 
+// ======================== authentication ===============================
 require __DIR__."/auth.php";
 
-
+// ======================== admin panel ===============================
 Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
     Route::resource('article',adminArticleController::class,['as'=>'admin']);
