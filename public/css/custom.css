@@ -1,3 +1,33 @@
+body {
+    background-color: #DDDDDD;
+}
+@font-face {
+    font-family: 'Vazirmatn RD';
+    src: url('/fonts/Vazir/Vazirmatn-RD[wght].woff2') format('woff2 supports variations'),
+    url('/fonts/Vazir/Vazirmatn-RD[wght].woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Tanha';
+    /*src: url('/fonts/Tanha/Tanha.woff2') format('woff2 supports variations'),*/
+    /*url('/fonts/Tanha/Tanha.woff2') format('woff2-variations'),*/
+    src: url('/fonts/Tanha/Tanha.eot') format('embedded-opentype'),
+    url('/fonts/Tanha/Tanha.woff2') format('woff2'),
+    url('/fonts/Tanha/Tanha.woff') format('woff'),
+    url('/fonts/Tanha/Tanha.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.vazir-rb {
+    font-family: 'Vazirmatn RD';
+}
+.Tanha {
+    font-family: 'Tanha';
+}
 .navbar-brand {
     width: 100px;
     height: 100px;
@@ -10,9 +40,6 @@
 .register-button {
     border: solid #7293be 1px;
     border-radius: 20px;
-}
-body {
-    background-color: #DDDDDD;
 }
 
 .navbar-bg {

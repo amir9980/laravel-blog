@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Article;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -95,5 +96,10 @@ class ArticlePolicy
     public function forceDelete(User $user, Article $article)
     {
         //
+    }
+
+    public function status(User $user)
+    {
+        return $user->role->permissions->contains(Permission::query()->whereTitle('activate and deactivate articles')->first());
     }
 }
