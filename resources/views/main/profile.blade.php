@@ -2,9 +2,7 @@
 
 @section('title', 'خانه')
 
-<style>
 
-</style>
 @section('content')
 
 
@@ -16,7 +14,7 @@
                 <div class="card p-3 py-4" style="background:none;border:none">
 
                     <div class="text-center">
-                        <img src="{{asset("/uploads/defaults/profile.png")}}" width="100" class="rounded-circle">
+                        <img src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}"  class="rounded-circle profile">
                     </div>
 
                     <div class="text-center mt-3">
@@ -28,13 +26,11 @@
                             <p class="fonts "> {{$user->profile->bio}}</p>
 
                         </div>
-
                         <ul class="social-list">
-                            @if(! is_null($user->profile->scocial_media))
+                            @if(! is_null($user->profile->social_media))
+                                @foreach(json_decode($user->profile->social_media) as $key=>$value)
+                                    <li><a  href="{{$value}}"><i class="fab fa-{{$key}}"></i></a></li>
 
-                                @foreach($user->profile->social_media as $key=>$value)
-
-                                    <li><a  href="?{{$key.'/'.$value}}"><i class="fa fa-{{$key}}"></i></a></li>
                                 @endforeach
                             @endif
 {{--                            <li><i class="fa fa-dribbble"></i></li>--}}
@@ -61,9 +57,6 @@
 
 
         @foreach($articles as $article)
-            @php
-                $user = $article->user;
-            @endphp
             <div class=" row letter article-card" style="@if($article == $articles->first()) margin-top: 0 @endif;">
                 <div class="col-12">
                     <div class="mt-1 d-flex float-end" >
@@ -89,7 +82,7 @@
 
                     </div>
                     <a class="custom-a " href="{{route("user.profile", $user->username)}}">
-                        <img class="profile" src="{{asset("/uploads/defaults/profile.png")}}"  >
+                        <img class="profile" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}"  >
                     </a>
                 </div>
                 <div class="me-2 ms-3 mt-1 float-start" >
@@ -104,18 +97,18 @@
 
             <div class="col-7 col-lg-8  col-sm-6 col-md-7 pt-2 pb-2 pe-0" >
                 <div class="h-75">
-                    <a class="custom-a" href="{{route('article.show', $article->slug)}}">
+                    <a class="custom-a" href="{{route('article.show',['user' => $user->username,'article' => $article->slug])}}">
                         <h5>{{$article->title}}</h5>
                     </a>
                     <p>{{$article->description}}</p>
                 </div>
                 <hr style="margin-top: -30px;">
-                <a  href="{{route('article.show', $article->slug)}}"  class="read-more" aria-label="Read More">ادامه مطلب</a>
+                <a  href="{{route('article.show',['user' => $user->username,'article' => $article->slug])}}"  class="read-more" aria-label="Read More">ادامه مطلب</a>
 
             </div>
 
             <div class="article-details col-5  col-lg-4 col-sm-6 col-md-5 pe-0">
-                <a class="custom-a" href="{{route('article.show', $article->slug)}}">
+                <a class="custom-a" href="{{route('article.show',['user' => $user->username,'article' => $article->slug])}}">
                     <div class="img-bg" style="background-image: url({{asset('/uploads/defaults/article-png.jpg')}});"></div>
                 </a>
 

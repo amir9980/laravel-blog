@@ -1,5 +1,5 @@
 @extends('main.layouts.master')
-@section('title', 'ورود')
+@section('title', 'ثبت نام')
 @section('style')
 <style>
     body {
@@ -18,7 +18,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-sm-10 col-lg-7 col-xl-5 order-2 order-lg-1">
 
-                                <h3 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 Tanha">ورود</h3>
+                                <h3 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 Tanha">ثبت نام</h3>
 
                                 <form class="mx-1 mx-md-4" action="{{route('register')}}" method="post">
                                     @csrf
