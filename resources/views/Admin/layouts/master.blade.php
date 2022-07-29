@@ -17,9 +17,9 @@
 <body>
 <nav class="navbar sticky-top bg-white navbar-expand-md navbar-light p-0">
     <div class="d-flex align-items-center">
-        <a href="#" class="navbar-brand bg-light m-0 py-3 px-5"
-        >پنل مدیریت</a
-        >
+        <a href="#" class="navbar-brand bg-light m-0 py-3 px-5">
+            پنل مدیریت
+        </a>
         <span
             class="oi oi-menu ms-4"
             data-toggle="collapse"
