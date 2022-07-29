@@ -35,6 +35,7 @@ class CommentController extends Controller
         Gate::authorize('status',$comment);
 
         $comment->is_active = !$comment->is_active;
+        $comment->fresh()->notifications()->delete();
         $comment->save();
 
         return back()->with(['message'=>'done']);
@@ -43,6 +44,7 @@ class CommentController extends Controller
     public function delete(Comment $comment)
     {
         Gate::authorize('delete',$comment);
+        $comment->notifications()->delete();
         Comment::destroy($comment->id);
         return back()->with(['message','done']);
     }

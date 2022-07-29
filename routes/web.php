@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ArticleController as adminArticleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Blog\UserController as blogUserController;
 use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,8 @@ Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(functio
     Route::get('/comment/index',[CommentController::class,'index'])->name('admin.comment.index');
     Route::put('/comment/{comment}/status',[CommentController::class,'status'])->name('admin.comment.status');
     Route::delete('/comment/{comment}/delete',[CommentController::class,'delete'])->name('admin.comment.delete');
+    Route::get('notification/users',[NotificationController::class,'users'])->name('admin.notification.users');
+    Route::get('notification/comments',[NotificationController::class,'comments'])->name('admin.notification.comments');
 });
 
 
