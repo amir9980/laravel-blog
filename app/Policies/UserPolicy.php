@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -22,7 +23,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role->title == 'watcher';
+        return $user->role->permissions->contains(Permission::query()->whereTitle('view any users')->first());
     }
 
     /**
@@ -63,7 +64,7 @@ class UserPolicy
 
     public function status(User $user,User $model)
     {
-        return ($user->role->title == 'admin' || $user->role->title == 'watcher') && ($model->role->title != 'admin' && $model->role->title != 'watcher');
+        return ($user->role->permissions->contains(Permission::query()->whereTitle('activate and deactivate users')->first())) && ($model->role->title != 'admin' && $model->role->title != 'watcher');
     }
 
     public function role(User $user)

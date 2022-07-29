@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Comment;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -99,6 +100,6 @@ class CommentPolicy
 
     public function status(User $user)
     {
-        return $user->role->title == 'watcher';
+        return $user->role->permissions->contains(Permission::query()->whereTitle('activate and deactivate comments')->first());
     }
 }
