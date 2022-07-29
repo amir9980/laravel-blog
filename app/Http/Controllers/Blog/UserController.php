@@ -83,8 +83,10 @@ class UserController extends Controller
             'username' => ['required', 'string', 'max:255','alpha_dash','regex:/^[a-zA-Z0-9._]+$/i'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::notIn(User::whereNot("id", auth()->id())->get()->pluck("email"))],
-            'bio' => ['required', 'string', 'max:600']
+            'bio' => ['max:600']
         ]);
+
+
 
         if (! is_null($request->file('profile_image'))) {
             if (! is_null($user_profile_image = $user->profile_image) and File::exists(public_path("public\\images\\".$user_profile_image))) {
@@ -98,10 +100,10 @@ class UserController extends Controller
         }
 
         $medias = [
-              "https://instagram.com/",
+            "https://instagram.com/",
             "https://t.me/",
             "https://www.linkedin.com/in/",
-             "https://github.com/",
+            "https://github.com/",
         ];
         $medias_keys = ["instagram", 'telegram', 'linkedin', 'github'];
 
