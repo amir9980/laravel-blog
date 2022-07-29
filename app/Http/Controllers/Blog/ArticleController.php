@@ -75,12 +75,15 @@ class ArticleController extends Controller
             'body' => 'required|max:500'
         ]);
 
-        $a = Comment::create([
+        $comment = Comment::create([
             'article_id' => $article->id,
             'user_id' => auth()->id(),
             'title' => $validate_data['title'],
             'body' => $validate_data['body']
             ]);
+
+        $comment->notifications()->create([]);
+
 
         return \redirect()->back()->withErrors(['commented' => 'نظر شما ثبت شد']);
 
