@@ -23,7 +23,7 @@ class UserController extends Controller
 
         $users = User::query();
 
-        $users = empty($request->title) ? $users : $users->where('username','LIKE',$request->username);
+        $users = empty($request->username) ? $users : $users->where('username','LIKE','%'.$request->username.'%');
         $users = empty($request->status) ? $users : $users->where('is_active','=',$request->status == 'active');
         $users = empty($request->role) ? $users : $users->where('role_id','=',Role::query()->whereTitle($request->role)->first()->id);
         $users = empty($request->end_date) ? $users : $users->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
@@ -67,15 +67,39 @@ class UserController extends Controller
         return back()->with(['message'=>'done']);
     }
 
-    public function articles(User $user)
+    public function articles(Request $request,User $user)
     {
-        $articles = $user->articles()->paginate(5)->withQueryString();
+        $request->validate([
+            'title'=>'nullable|string|max:100',
+            'status'=>'nullable|string|in:active,inactive',
+            'end_date'=>'nullable|date'
+        ]);
+
+        $articles = $user->articles();
+
+        $articles = empty($request->title) ? $articles : $articles->where('title','LIKE','%'.$request->title.'%');
+        $articles = empty($request->status) ? $articles : $articles->where('is_active','=',$request->status == 'active');
+        $articles = empty($request->end_date) ? $articles : $articles->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+
+        $articles = $articles->paginate(5)->withQueryString();
         return view('Admin.user.articles',compact('articles'));
     }
 
-    public function comments(User $user)
+    public function comments(Request $request,User $user)
     {
-        $comments = $user->comments()->paginate(5)->withQueryString();
+        $request->validate([
+            'title'=>'nullable|string|max:100',
+            'status'=>'nullable|string|in:active,inactive',
+            'end_date'=>'nullable|date'
+        ]);
+
+        $comments = $user->comments();
+
+        $comments = empty($request->title) ? $comments : $comments->where('title','LIKE','%'.$request->title.'%');
+        $comments = empty($request->status) ? $comments : $comments->where('is_active','=',$request->status == 'active');
+        $comments = empty($request->end_date) ? $comments : $comments->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+
+        $comments = $comments->paginate(5)->withQueryString();
 
         return view('Admin.user.comments',compact('comments'));
     }

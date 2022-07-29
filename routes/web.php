@@ -34,7 +34,9 @@ Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(functio
     Route::get('/user/{user:username}/edit',[UserController::class,'edit'])->name('admin.user.edit');
     Route::put('/user/{user:username}/update',[UserController::class,'update'])->name('admin.user.update');
     Route::put('/user/{user:username}/status',[UserController::class,'status'])->name('admin.user.status');
+    Route::get('/comment/index',[CommentController::class,'index'])->name('admin.comment.index');
     Route::put('/comment/{comment}/status',[CommentController::class,'status'])->name('admin.comment.status');
+    Route::delete('/comment/{comment}/delete',[CommentController::class,'delete'])->name('admin.comment.delete');
 });
 
 

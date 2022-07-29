@@ -9,29 +9,29 @@
             <div class="row align-items-center">
                 <div class="col-md-2 form-group">
                     <label>نام کاربری</label>
-                    <input class="form-control" name="username" type="text">
+                    <input class="form-control" name="username" type="text" value="{{request()->query('username')}}">
                 </div>
                 <div class="col-md-2 form-group">
                     <label>وضعیت</label>
                     <select name="status" class="form-control">
                         <option value="">انتخاب کنید</option>
-                        <option value="active">فعال</option>
-                        <option value="inactive">غیرفعال</option>
+                        <option value="active" @if(request()->query('status') == 'active') selected @endif>فعال</option>
+                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>نقش</label>
                     <select name="role" class="form-control">
                         <option value="">انتخاب کنید</option>
-                        <option value="user">کاربر</option>
-                        <option value="writer">نویسنده</option>
-                        <option value="watcher">بازرس</option>
-                        <option value="admin">مدیر</option>
+                        <option value="user" @if(request()->query('role') == 'user') selected @endif>کاربر</option>
+                        <option value="writer" @if(request()->query('role') == 'writer') selected @endif>نویسنده</option>
+                        <option value="watcher" @if(request()->query('role') == 'watcher') selected @endif>بازرس</option>
+                        <option value="admin" @if(request()->query('role') == 'admin') selected @endif>مدیر</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker">
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker" value="{{request()->query('end_date')}}">
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -49,6 +49,7 @@
         <th>وضعیت</th>
         <th>مقاله ها</th>
         <th>نظرات</th>
+        <th>تاریخ ثبت</th>
         <th>عملیات</th>
         </thead>
 
@@ -81,6 +82,7 @@
                     </td>
                     <td>{{$user->articles_count}}</td>
                     <td>{{$user->comments_count}}</td>
+                    <td>{{\Morilog\Jalali\Jalalian::forge($user->created_at)->format('%A, %d %B %y')}}</td>
                     <td class="d-flex justify-content-around">
                         @if($user->is_active)
                             <form action="{{route('admin.user.status',$user->username)}}" method="POST">
