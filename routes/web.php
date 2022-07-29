@@ -47,7 +47,9 @@ Route::get('/', [ArticleController::class, 'index'])->name("home");
 // ======================== articles =============================
 Route::prefix("articles")->group(function () {
     // ----------------------------- single article ----------
-    Route::get("/{article:slug}", [ArticleController::class, 'show'])->name('article.show');
+    Route::get("/{user:username}/{article:slug}", [ArticleController::class, 'show'])->name('article.show');
+    // ----------------------------- create article ----------
+    Route::get("/create", [ArticleController::class, 'create'])->name('article.create');
     // ----------------------------- single bookmark ---------
     Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
     // ----------------------------- single like -------------
@@ -69,5 +71,5 @@ Route::prefix("users")->group(function () {
     // ----------------------------- user edit page ------------
     Route::get("/{user:username}/edit", [blogUserController::class, 'edit'])->name("user.edit")->middleware("auth");
     // ----------------------------- user update profile -------
-    Route::post("/{user:username}/update", [blogUserController::class, 'update'])->name("user.update");
+    Route::put("/{user:username}/update", [blogUserController::class, 'update'])->name("user.update");
 });

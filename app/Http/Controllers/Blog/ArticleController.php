@@ -27,7 +27,7 @@ class ArticleController extends Controller
         return view('main.home', compact('articles', 'bookmarks', 'likes'));
     }
 
-    public function show(Article $article)
+    public function show(User $user, Article $article)
     {
         $articles = Article::latest()->paginate(10);
         if (auth()->check()){
@@ -37,6 +37,7 @@ class ArticleController extends Controller
             $bookmarks = [];
             $likes = [];
         }
+
         $user = $article->user;
         return view('main.single_article', compact('article','user', 'bookmarks', 'likes'));
 
@@ -73,20 +74,26 @@ class ArticleController extends Controller
             'title' => 'required|max:65',
             'body' => 'required|max:500'
         ]);
-//        dd($validate_data);
-        Comment::create([
+
+        $a = Comment::create([
             'article_id' => $article->id,
             'user_id' => auth()->id(),
             'title' => $validate_data['title'],
             'body' => $validate_data['body']
             ]);
+
         return \redirect()->back()->withErrors(['commented' => 'نظر شما ثبت شد']);
-//        dd($request, $article);
+
     }
 
     public function comment_destroy(Comment $comment)
     {
         $comment->delete();
         return \redirect()->back()->withErrors(['comment_destroy' => 'دیدگاه مورد نظر حذف شد']);
+    }
+
+    public function create()
+    {
+        dd("main.article_create");
     }
 }

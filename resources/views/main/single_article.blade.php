@@ -35,7 +35,7 @@
                     <div class="text-end col-2 float-end">
                         <a class="custom-a" href="{{route("user.profile", $user->username)}}">
 
-                        <img src="{{asset("/uploads/defaults/profile.png")}}" width="100" class="rounded-circle">
+                        <img src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}" class="rounded-circle profile">
                         </a>
 
                     </div>
