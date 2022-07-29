@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\User;
+use  \Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -62,7 +65,9 @@ class UserController extends Controller
         if (auth()->id() != $user->id) {
             return redirect()->back();
         }
-        dd($user);
+
+        return view('main.profile_edit', compact('user'));
+
     }
 
     /**
@@ -72,9 +77,54 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $validate_data = $request->validate([
+            'username' => ['required', 'string', 'max:255','alpha_dash','regex:/^[a-zA-Z0-9._]+$/i'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::notIn(User::whereNot("id", auth()->id())->get()->pluck("email"))],
+            'bio' => ['required', 'string', 'max:600']
+        ]);
+
+        if (! is_null($request->file('profile_image'))) {
+            if (! is_null($user_profile_image = $user->profile_image) and File::exists(public_path("public\\images\\".$user_profile_image))) {
+                File::delete(public_path('uploads\\images'.$user_profile_image));
+            }
+            $request->validate(['profile_image' => 'image']);
+            $file = $request->file('profile_image');
+            $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
+            $file->move(public_path('uploads\\images'), $file_name);
+            $user->update(['profile_image' => $file_name]);
+        }
+
+        $medias = [
+              "https://instagram.com/",
+            "https://t.me/",
+            "https://www.linkedin.com/in/",
+             "https://github.com/",
+        ];
+        $medias_keys = ["instagram", 'telegram', 'linkedin', 'github'];
+
+        $social_medias = $request->social_media;
+        $json_medias = [];
+        foreach ($social_medias as $key=>$social_media) {
+            if (is_null($social_media)) {
+                continue;
+            }
+            $url = (str_contains($social_media,"/"))?($social_media):(($medias[$key].$social_media));
+            $json_medias[$medias_keys[$key]] = $url;
+        }
+        $user->update([
+            'name' => $validate_data['name'],
+            'email' => $validate_data['email'],
+            'username' => $validate_data['username']
+        ]);
+        $user->profile->update([
+            'username' => $validate_data['username'],
+            'social_media' => json_encode($json_medias)
+        ]);
+
+        return Redirect::route("user.profile", $user);
     }
 
     /**
