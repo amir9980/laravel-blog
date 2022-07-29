@@ -4,7 +4,37 @@
 
 @section('content')
 
-    <table class="table table-bordered table-striped text-center">
+    <div>
+        <h4>جستجو</h4>
+        <form action="#">
+            <div class="row align-items-center">
+                <div class="col-md-2 form-group">
+                    <label>عنوان</label>
+                    <input class="form-control" name="title" type="text" value="{{request()->query('title')}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>وضعیت</label>
+                    <select name="status" class="form-control">
+                        <option value="">انتخاب کنید</option>
+                        <option value="active" @if(request()->query('status') == 'active') selected @endif>فعال</option>
+                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>آخرین تاریخ ثبت</label>
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
+                           value="{{request()->query('end_date')}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped text-center mt-5">
         <thead>
         <th>ردیف</th>
         <th>عنوان</th>
@@ -42,6 +72,14 @@
                                     <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                                 </form>
                             @endif
+                        @endcan
+                        @can('delete',$comment)
+                            <form action="{{route('admin.comment.delete',$comment->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span>
+                                </button>
+                            </form>
                         @endcan
                     </td>
                 </tr>

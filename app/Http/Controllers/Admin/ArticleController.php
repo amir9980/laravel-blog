@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
 
 class ArticleController extends Controller
 {
@@ -14,9 +16,22 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::all();
+        $request->validate([
+            'title'=>'nullable|string|max:100',
+            'status'=>'nullable|string|in:active,inactive',
+            'end_date'=>'nullable|date'
+        ]);
+
+        $articles = Article::query();
+
+        $articles = empty($request->title) ? $articles : $articles->where('title','LIKE','%'.$request->title.'%');
+        $articles = empty($request->status) ? $articles : $articles->where('is_active','=',$request->status == 'active');
+        $articles = empty($request->end_date) ? $articles : $articles->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        $articles = $articles->withCount(['comments'=>function(Builder $query){
+        }])->paginate(5)->withQueryString();
+
         return view('Admin.article.index',compact('articles'));
     }
 
@@ -90,15 +105,29 @@ class ArticleController extends Controller
 
     public function status(Article $article)
     {
+        Gate::authorize('status',Article::class);
+
         $article->is_active = !$article->is_active;
         $article->save();
 
         return back()->with(['message'=>'done']);
     }
 
-    public function comments(Article $article)
+    public function comments(Request $request,Article $article)
     {
-        $comments = $article->comments()->paginate(5)->withQueryString();
+        $request->validate([
+            'title'=>'nullable|string|max:100',
+            'status'=>'nullable|string|in:active,inactive',
+            'end_date'=>'nullable|date'
+        ]);
+
+        $comments = $article->comments();
+
+        $comments = empty($request->title) ? $comments : $comments->where('title','LIKE','%'.$request->title.'%');
+        $comments = empty($request->status) ? $comments : $comments->where('is_active','=',$request->status == 'active');
+        $comments = empty($request->end_date) ? $comments : $comments->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+
+        $comments = $comments->paginate(5)->withQueryString();
         return view('Admin.article.comments',compact('comments'));
     }
 }

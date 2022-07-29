@@ -78,7 +78,8 @@
                             <form action="{{route('admin.comment.delete',$comment->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span></button>
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span>
+                                </button>
                             </form>
                         @endcan
                     </td>

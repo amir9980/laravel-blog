@@ -19,9 +19,9 @@ class PermissionRoleSeeder extends Seeder
         $writer->permissions()->attach([1,2,3]);
 
         $watcher = Role::find(3);
-        $watcher->permissions()->attach([1,2,3,4,7,8,9,11]);
+        $watcher->permissions()->attach([1,2,3,4,7,8,9,12]);
 
         $admin = Role::find(4);
-        $admin->permissions()->attach([1,2,3,4,5,6,7,8,9,10,11]);
+        $admin->permissions()->attach([1,2,3,4,5,6,7,8,9,10,11,12]);
     }
 }
