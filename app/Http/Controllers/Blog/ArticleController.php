@@ -97,6 +97,6 @@ class ArticleController extends Controller
 
     public function create()
     {
-        dd("main.article_create");
+        return view("main.article_create");
     }
 }
