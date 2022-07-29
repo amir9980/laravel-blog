@@ -49,6 +49,9 @@ class PermissionSeeder extends Seeder
             [
                 'title'=>'create, edit and delete categories'
             ],
+            [
+                'title'=>'view any users'
+            ]
         ];
 
         Permission::insert($data);
