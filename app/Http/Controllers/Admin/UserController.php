@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Morilog\Jalali\Jalalian;
 
 class UserController extends Controller
@@ -37,14 +38,14 @@ class UserController extends Controller
     public function edit(User $user)
     {
         Gate::authorize('role',$user);
-        $roles = Role::all();
-        return view('Admin.user.edit',compact('user','roles'));
+        return view('Admin.user.edit',compact('user'));
     }
 
     public function update(Request $request,User $user)
     {
+        $roles = Role::query()->pluck('title');
         $request->validate([
-            'role'=>'required|string|in:user,writer,watcher,admin'
+            'role'=>['required','string',Rule::in($roles)]
         ]);
 
         Gate::authorize('role',$user);
@@ -53,7 +54,7 @@ class UserController extends Controller
         $user->role_id = $role->id;
         $user->save();
 
-        return back()->with(['message','done']);
+        return redirect()->route('admin.user.index')->with(['message','done']);
 
     }
 

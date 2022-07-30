@@ -17,15 +17,16 @@ class RoleSeeder extends Seeder
     {
         $data = [
             [
-                'title' => 'user'
+                'title' => 'user',
+                'farsi_name'=>'کاربر'
             ],
             [
-                'title' => 'writer'
+                'title' => 'writer','farsi_name'=>'نویسنده'
             ],
             [
-                'title' => 'watcher'
+                'title' => 'watcher','farsi_name'=>'بازرس'
             ],
-            ['title' => 'admin'
+            ['title' => 'admin','farsi_name'=>'مدیر'
             ]
         ];
 
