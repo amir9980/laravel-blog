@@ -4,6 +4,7 @@
     <script src="/js/ckeditor/ckeditor.js"></script>
 @endsection
 @section('content')
+    @include('main.layouts.includes.errors')
     <form action="{{route("article.store")}}" method="post" id="create_article" enctype="multipart/form-data">
         @csrf
     </form>
@@ -40,7 +41,7 @@
             </div>
             <div class="col-12 mt-3" >
                 <label for="category_id"><h3 class="Tanha">موضوع</h3></label>
-                <select form="create_article" name="categories" id="category_id" class="form-control w-75 h-50 Tanha">
+                <select form="create_article" name="category_id" id="category_id" class="form-control w-75 h-50 Tanha">
                     <option>انتخاب کنید</option>
                     @foreach(\App\Models\Category::all() as $category)
                         <option value="{{$category->id}}">{{$category->title}}</option>
