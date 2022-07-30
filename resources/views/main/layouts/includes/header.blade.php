@@ -13,7 +13,7 @@
                             پروفایل
                         </a>
                         <div class="dropdown-menu profile-link" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route("article.create", $user->username)}}">ایجاد مقاله</a>
+                            <a class="dropdown-item" href="{{route("article.create")}}">ایجاد مقاله</a>
                             <a class="dropdown-item" href="{{route("user.edit", $user->username)}}">ویرایش</a>
                             <hr>
                             <form action="{{route('logout')}}" method="post" class="d-none" id="logout">
