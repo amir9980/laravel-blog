@@ -11,7 +11,7 @@
              alt="user profile">
         <div class="card-body">
         <h5 class="card-title">{{\Illuminate\Support\Facades\Auth::user()->username}}</h5>
-        <span>نقش: {{\Illuminate\Support\Facades\Auth::user()->role->title}}</span>
+        <span>نقش: {{\Illuminate\Support\Facades\Auth::user()->role->farsi_name}}</span>
         </div>
     </div>
 
