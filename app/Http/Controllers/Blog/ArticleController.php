@@ -162,4 +162,9 @@ class ArticleController extends Controller
         Article::create($validate_data);
         return Redirect::route('article.show', ['user' => auth()->user()->username, 'article'=>$validate_data['slug']]);
     }
+    public function destroy(Article $article){
+        $article->delete();
+        return \redirect()->back();
+    }
+
 }
