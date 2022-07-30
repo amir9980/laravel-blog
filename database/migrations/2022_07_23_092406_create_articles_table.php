@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('body');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->unsignedInteger('likes')->default(0);
             $table->string('thumbnail')->nullable();
             $table->json('tags')->nullable();

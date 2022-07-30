@@ -52,7 +52,7 @@ Route::prefix("articles")->group(function () {
     // ----------------------------- single article ----------
     Route::get("/{user:username}/{article:slug}", [ArticleController::class, 'show'])->name('article.show');
     // ----------------------------- create article ----------
-    Route::get("/create", [ArticleController::class, 'create'])->name('article.create'); //->middleware('can:create,App\Models\Article');
+    Route::get("/create", [ArticleController::class, 'create'])->name('article.create')->middleware('can:create,App\Models\Article');
     // ----------------------------- single bookmark ---------
     Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
     // ----------------------------- single like -------------
