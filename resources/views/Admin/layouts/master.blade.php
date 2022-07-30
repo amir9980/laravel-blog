@@ -36,7 +36,7 @@
                 <a href="#" class="nav-link">اعضا</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">تنظیمات</a>
+                <a href="{{route('user.edit',\Illuminate\Support\Facades\Auth::user()->username)}}" class="nav-link">پروفایل</a>
             </li>
         </ul>
 
@@ -90,7 +90,7 @@
                             </li>
                             <li class="nav-item w-100">
                                 <a
-                                    href="{{route('admin.article.create')}}"
+                                    href="{{route('article.create')}}"
                                     class="nav-link my-1 w-100 collapsed"
 
                                 >ارسال مقاله
