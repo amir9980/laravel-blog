@@ -1,5 +1,5 @@
 @extends('Admin.layouts.master')
-@section('title','ویرایش کاربر')
+@section('title','ویرایش نقش کاربر')
 
 @section('content')
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use  \Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -62,9 +63,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (auth()->id() != $user->id) {
-            return redirect()->back();
-        }
+        Gate::authorize('update',$user);
 
         return view('main.profile_edit', compact('user'));
 
