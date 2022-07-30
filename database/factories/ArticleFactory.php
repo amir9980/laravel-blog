@@ -25,7 +25,7 @@ class ArticleFactory extends Factory
             'description'=> PersianFaker::sentence(),
             'body'=> PersianFaker::paragraph().PersianFaker::paragraph(),
             'slug'=> Str::replace(' ','-',$title).randomNumber(10),
-            'tags'=>[PersianFaker::word(),PersianFaker::word()],
+            'tags'=>json_encode([PersianFaker::word(),PersianFaker::word()]),
             'category_id'=>random_int(1,5),
             'created_at' => now(),
             'updated_at' => now(),
