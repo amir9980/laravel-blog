@@ -16,22 +16,23 @@
                     <select name="status" class="form-control">
                         <option value="">انتخاب کنید</option>
                         <option value="active" @if(request()->query('status') == 'active') selected @endif>فعال</option>
-                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال</option>
+                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>نقش</label>
                     <select name="role" class="form-control">
                         <option value="">انتخاب کنید</option>
-                        <option value="user" @if(request()->query('role') == 'user') selected @endif>کاربر</option>
-                        <option value="writer" @if(request()->query('role') == 'writer') selected @endif>نویسنده</option>
-                        <option value="watcher" @if(request()->query('role') == 'watcher') selected @endif>بازرس</option>
-                        <option value="admin" @if(request()->query('role') == 'admin') selected @endif>مدیر</option>
+                        @foreach(\App\Models\Role::all() as $role)
+                            <option value="{{$role->title}}">{{$role->farsi_name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker" value="{{request()->query('end_date')}}">
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
+                           value="{{request()->query('end_date')}}">
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -62,20 +63,7 @@
                     <td>{{$iteration}}</td>
                     <td><a href="#">{{$user->username}}</a></td>
                     <td>
-                        @switch($user->role_id)
-                            @case(1)
-                                <span class="badge bg-warning text-dark">کاربر</span>
-                                @break
-                            @case(2)
-                                <span class="badge bg-info text-dark">نویسنده</span>
-                                @break
-                            @case(3)
-                                <span class="badge bg-warning text-dark">بازرس</span>
-                                @break
-                            @case(4)
-                                <span class="badge bg-warning text-dark">مدیر</span>
-                                @break
-                        @endswitch
+                        <span class="badge bg-warning text-dark">{{$user->role->farsi_name}}</span>
                     </td>
                     <td>
                         {{$user->is_active ? 'فعال' : 'غیر فعال'}}
@@ -99,7 +87,11 @@
                         @endif
                         @can('role',$user)
                             <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
-                               title="ویرایش"><span class="oi oi-cog"></span></a>
+                               title="نقش"><span class="oi oi-cog"></span></a>
+                        @endcan
+                        @can('update',$user)
+                            <a href="{{route('user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
+                               title="ویرایش"><span class="oi oi-pencil"></span></a>
                         @endcan
                         <a href="{{route('admin.user.articles',$user->username)}}" class="btn btn-sm btn-secondary"
                            title="مشاهده مقالات"><span class="oi oi-list"></span></a>

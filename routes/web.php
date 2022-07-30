@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Blog\UserController as blogUserController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,11 @@ Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(functio
     Route::delete('/comment/{comment}/delete',[CommentController::class,'delete'])->name('admin.comment.delete');
     Route::get('notification/users',[NotificationController::class,'users'])->name('admin.notification.users');
     Route::get('notification/comments',[NotificationController::class,'comments'])->name('admin.notification.comments');
+    Route::get('category/index',[CategoryController::class,'index'])->name('admin.category.index');
+    Route::get('category/{cat}/edit',[CategoryController::class,'edit'])->name('admin.category.edit');
+    Route::get('category/create',[CategoryController::class,'create'])->name('admin.category.create');
+    Route::post('category/store',[CategoryController::class,'store'])->name('admin.category.store');
+    Route::put('category/update',[CategoryController::class,'update'])->name('admin.category.update');
 });
 
 
@@ -52,9 +58,7 @@ Route::prefix("articles")->group(function () {
     // ----------------------------- single article ----------
     Route::get("/{user:username}/{article:slug}", [ArticleController::class, 'show'])->name('article.show');
     // ----------------------------- create article ----------
-    Route::get("/create", [ArticleController::class, 'create'])->name('article.create'); //->middleware('can:create,App\Models\Article');
-    // ----------------------------- store article -----------
-    Route::post("/create", [ArticleController::class, 'store'])->name('article.store'); //->middleware('can:create,App\Models\Article');
+    Route::get("/create", [ArticleController::class, 'create'])->name('article.create')->middleware('can:create,App\Models\Article');
     // ----------------------------- single bookmark ---------
     Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
     // ----------------------------- single like -------------
@@ -68,13 +72,13 @@ Route::prefix("articles")->group(function () {
 
 
 // ======================== users ===============================
-Route::prefix("users")->group(function () {
+Route::prefix("users")->middleware("auth")->group(function () {
     // ----------------------------- user profile --------------
     Route::get("/{user:username}", [blogUserController::class, 'profile'])->name("user.profile");
     // ----------------------------- user articles -------------
     Route::get("/{user:username}/articles", [blogUserController::class, 'articles'])->name('user.articles');
     // ----------------------------- user edit page ------------
-    Route::get("/{user:username}/edit", [blogUserController::class, 'edit'])->name("user.edit")->middleware("auth");
+    Route::get("/{user:username}/edit", [blogUserController::class, 'edit'])->name("user.edit");
     // ----------------------------- user update profile -------
     Route::put("/{user:username}/update", [blogUserController::class, 'update'])->name("user.update");
 });
