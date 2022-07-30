@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Blog\UserController as blogUserController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,11 @@ Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(functio
     Route::delete('/comment/{comment}/delete',[CommentController::class,'delete'])->name('admin.comment.delete');
     Route::get('notification/users',[NotificationController::class,'users'])->name('admin.notification.users');
     Route::get('notification/comments',[NotificationController::class,'comments'])->name('admin.notification.comments');
+    Route::get('category/index',[CategoryController::class,'index'])->name('admin.category.index');
+    Route::get('category/{cat}/edit',[CategoryController::class,'edit'])->name('admin.category.edit');
+    Route::get('category/create',[CategoryController::class,'create'])->name('admin.category.create');
+    Route::post('category/store',[CategoryController::class,'store'])->name('admin.category.store');
+    Route::put('category/update',[CategoryController::class,'update'])->name('admin.category.update');
 });
 
 
