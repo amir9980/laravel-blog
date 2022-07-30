@@ -8,7 +8,17 @@
             <div class=" mt-5">
 
             </div>
-            @foreach($articles as $article)
+            @if($articles->count() != 0)
+
+                <div style="margin-top: -50px;">
+                    <select form="search" style="width: 100px;float: right"  name="orderBy" class="custom-select custom-select-sm form-control form-control-sm">
+                       <option value="newest" {{$orderBy == "newest"?'selected':''}}>جدیدترین</option>
+                        <option value="name" {{$orderBy == "name"?'selected':''}}>اسم</option>
+                        <option value="likes" {{$orderBy == "likes"?'selected':''}}>محبوب ترین</option>
+                    </select>
+                        <button form="search" type="submit" class="btn btn-primary float-end me-4" style="font-size: 10px">اعمال</button>
+                </div>
+                    @foreach($articles as $article)
                 @php
                     $user = $article->user;
                 @endphp
@@ -63,13 +73,20 @@
 
                     <div class="article-details col-5  col-lg-4 col-sm-6 col-md-5 pe-0">
                         <a class="custom-a" href="{{route('article.show', ['user' => $user->username,'article' => $article->slug])}}">
-                        <div class="img-bg" style="background-image: url({{asset('/uploads/defaults/article-png.jpg')}});"></div>
+                        <div class="img-bg" style="background-image: url({{is_null($article->thumbnail)?'/uploads/defaults/article-png.jpg':'/uploads/imgs/'.$article->thumbnail}});"></div>
                         </a>
 
                     </div>
                 </div>
 
                 @endforeach
+            @else
+                <div class="justify-content-center text-center vazir-rb" dir="rtl">
+                    <h3 >
+                        هیچ مقاله ای یافت نشد!
+                    </h3>
+                </div>
+            @endif
 
     <div class="mt-5">
             {{$articles->links()}}

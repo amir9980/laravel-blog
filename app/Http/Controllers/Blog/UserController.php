@@ -88,13 +88,13 @@ class UserController extends Controller
 
 
         if (! is_null($request->file('profile_image'))) {
-            if (! is_null($user_profile_image = $user->profile_image) and File::exists(public_path("public\\images\\".$user_profile_image))) {
-                File::delete(public_path('uploads\\images'.$user_profile_image));
+            if (! is_null($user_profile_image = $user->profile_image) and File::exists(public_path("\\uploads\\imgs".$user_profile_image))) {
+                File::delete(public_path('\\uploads\\imgs'.$user_profile_image));
             }
             $request->validate(['profile_image' => 'image']);
             $file = $request->file('profile_image');
             $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
-            $file->move(public_path('uploads\\images'), $file_name);
+            $file->move(public_path('\\uploads\\imgs'), $file_name);
             $user->update(['profile_image' => $file_name]);
         }
 

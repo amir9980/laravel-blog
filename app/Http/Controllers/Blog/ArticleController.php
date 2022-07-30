@@ -10,13 +10,49 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
+use function Ybazli\Faker\string;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::latest()->paginate(10);
+        $orderBy = 'newest';
+        $articles = Article::orderBy('id', 'desc');
+        $search = "";
+//        dd($articles->get());
+
+        if (str_contains($request->fullUrl(), "?")) {
+            $datas = explode("?", $request->fullUrl());
+            unset($datas[0]);
+            $datas = explode("&", $datas[1]);
+            $datas = array_map(fn($get)=>[explode('=', $get)[0]=>explode("=", $get)[1]], $datas);
+            foreach ($datas as $data) {
+                foreach ($data as $key=>$value){
+                    if ($key == "orderBy") {
+                        if (!in_array($value, ['newest', 'name', 'likes'])){
+                            continue;
+                        }
+                        $orderBy = $value;
+                        if ($value == 'newest') {
+                            $articles = Article::orderBy('id', 'desc');
+
+                        } elseif ($value == 'title') {
+                            $articles = Article::orderBy('title');
+                        }elseif ($value == 'likes') {
+                            $articles = Article::orderBy('likes', 'desc');
+                        }
+                     } elseif ($key == 'search') {
+                        $articles = $articles->where('title','LIKE', '%'.urldecode($value).'%')->orWhere('body', 'LIKE', '%'.urldecode($value).'%')->orWhere('description', 'LIKE', '%'.urldecode($value).'%');
+                        $search = urldecode($value);
+                    }
+                }
+            }
+
+        }
+        $articles = $articles->paginate(10);
         if (auth()->check()){
             $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
             $likes = auth()->user()->user_likes->pluck('article_id')->toArray();
@@ -24,7 +60,8 @@ class ArticleController extends Controller
             $bookmarks = [];
             $likes = [];
         }
-        return view('main.home', compact('articles', 'bookmarks', 'likes'));
+
+        return view('main.home', compact('articles', 'bookmarks', 'likes', 'orderBy', 'search'));
     }
 
     public function show(User $user, Article $article)
@@ -97,6 +134,31 @@ class ArticleController extends Controller
 
     public function create()
     {
-        dd("main.article_create");
+        return view("main.article_create");
+    }
+
+    public function store(Request $request)
+    {
+        $validate_data = $request->validate([
+            'title' => ['required', 'max:100'],
+            'description' => ['required', 'max:600'],
+            'thumbnail' => ['required', 'image'],
+            'categories' => ['required'],
+            'body' => 'required',
+            ]);
+
+        $file = $request->file('thumbnail');
+        $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
+        $file->move(public_path('\\uploads\\imgs'), $file_name);
+        $validate_data['thumbnail'] = $file_name;
+        $tags = $request->validate(['tags' => ['required']])['tags'];
+        unset($validate_data['categories']);
+        $validate_data['category_id'] = 1;
+        $validate_data['slug'] = Str::slug($validate_data['title']);
+        $tags = explode(",", $tags);
+        $validate_data['tags'] = json_encode($tags);
+        $validate_data['user_id'] = auth()->id();
+        Article::create($validate_data);
+        return Redirect::route('article.show', $validate_data['slug'], ['user' => auth()->user()->username, 'article'=>$validate_data['slug']]);
     }
 }
