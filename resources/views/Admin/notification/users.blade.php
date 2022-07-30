@@ -50,7 +50,7 @@
                         @endcan
                             @can('role',$user)
                                 <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
-                                   title="ویرایش"><span class="oi oi-cog"></span></a>
+                                   title="نقش"><span class="oi oi-cog"></span></a>
                             @endcan
                     </td>
                 </tr>
