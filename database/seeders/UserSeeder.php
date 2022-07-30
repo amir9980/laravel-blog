@@ -21,16 +21,16 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            [
                 'name'=>'امیر',
                 'username'=>'amir',
                 'email'=>'amir@yahoo.com',
                 'password'=>bcrypt('11111111'),
                 'role_id'=>4,
                 'remember_token'=>Str::random(10)
-            ]
         ]);
-        $user->profile()->create([]);
+
+        $user->profile()->create();
+
         User::factory()
             ->has(Profile::factory()->count(1))
             ->has(Article::factory()
