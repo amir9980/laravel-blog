@@ -11,22 +11,9 @@
                 <label class="my-3">نقش</label>
                 <select name="role" class="form-control">
                     <option>انتخاب کنید</option>
-                    @foreach($roles as $role)
+                    @foreach(\App\Models\Role::all() as $role)
                         <option value="{{$role->title}}">
-                            @switch($role->title)
-                                @case('user')
-                                    کاربر
-                                @break
-                                @case('writer')
-                                    نویسنده
-                                    @break
-                                @case('watcher')
-                                    بازرس
-                                    @break
-                                @case('admin')
-                                    مدیر
-                                    @break
-                            @endswitch
+                            {{$role->farsi_name}}
                         </option>
                     @endforeach
                 </select>

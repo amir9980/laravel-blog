@@ -109,7 +109,7 @@
         </div>
 
         <div class="col-12 col-md-10 ms-md-auto p-4 bg-light" id="main">
-
+            @include('Admin.includes.errors')
             @yield('content')
 
 
