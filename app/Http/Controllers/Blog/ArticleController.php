@@ -13,12 +13,46 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use function Ybazli\Faker\string;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::latest()->paginate(10);
+        $orderBy = 'newest';
+        $articles = Article::orderBy('id', 'desc');
+        $search = "";
+//        dd($articles->get());
+
+        if (str_contains($request->fullUrl(), "?")) {
+            $datas = explode("?", $request->fullUrl());
+            unset($datas[0]);
+            $datas = explode("&", $datas[1]);
+            $datas = array_map(fn($get)=>[explode('=', $get)[0]=>explode("=", $get)[1]], $datas);
+            foreach ($datas as $data) {
+                foreach ($data as $key=>$value){
+                    if ($key == "orderBy") {
+                        if (!in_array($value, ['newest', 'name', 'likes'])){
+                            continue;
+                        }
+                        $orderBy = $value;
+                        if ($value == 'newest') {
+                            $articles = Article::orderBy('id', 'desc');
+
+                        } elseif ($value == 'title') {
+                            $articles = Article::orderBy('title');
+                        }elseif ($value == 'likes') {
+                            $articles = Article::orderBy('likes', 'desc');
+                        }
+                     } elseif ($key == 'search') {
+                        $articles = $articles->where('title','LIKE', '%'.urldecode($value).'%')->orWhere('body', 'LIKE', '%'.urldecode($value).'%')->orWhere('description', 'LIKE', '%'.urldecode($value).'%');
+                        $search = urldecode($value);
+                    }
+                }
+            }
+
+        }
+        $articles = $articles->paginate(10);
         if (auth()->check()){
             $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
             $likes = auth()->user()->user_likes->pluck('article_id')->toArray();
@@ -26,7 +60,8 @@ class ArticleController extends Controller
             $bookmarks = [];
             $likes = [];
         }
-        return view('main.home', compact('articles', 'bookmarks', 'likes'));
+
+        return view('main.home', compact('articles', 'bookmarks', 'likes', 'orderBy', 'search'));
     }
 
     public function show(User $user, Article $article)
