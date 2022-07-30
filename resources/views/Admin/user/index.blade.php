@@ -23,10 +23,9 @@
                     <label>نقش</label>
                     <select name="role" class="form-control">
                         <option value="">انتخاب کنید</option>
-                        <option value="user" @if(request()->query('role') == 'user') selected @endif>کاربر</option>
-                        <option value="writer" @if(request()->query('role') == 'writer') selected @endif>نویسنده</option>
-                        <option value="watcher" @if(request()->query('role') == 'watcher') selected @endif>بازرس</option>
-                        <option value="admin" @if(request()->query('role') == 'admin') selected @endif>مدیر</option>
+                        @foreach(\App\Models\Role::all() as $role)
+                            <option value="{{$role->title}}">{{$role->farsi_name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
@@ -62,20 +61,7 @@
                     <td>{{$iteration}}</td>
                     <td><a href="#">{{$user->username}}</a></td>
                     <td>
-                        @switch($user->role_id)
-                            @case(1)
-                                <span class="badge bg-warning text-dark">کاربر</span>
-                                @break
-                            @case(2)
-                                <span class="badge bg-info text-dark">نویسنده</span>
-                                @break
-                            @case(3)
-                                <span class="badge bg-warning text-dark">بازرس</span>
-                                @break
-                            @case(4)
-                                <span class="badge bg-warning text-dark">مدیر</span>
-                                @break
-                        @endswitch
+                        <span class="badge bg-warning text-dark">{{$user->role->farsi_name}}</span>
                     </td>
                     <td>
                         {{$user->is_active ? 'فعال' : 'غیر فعال'}}
