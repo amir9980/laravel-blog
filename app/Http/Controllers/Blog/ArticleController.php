@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Bookmark;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use function Ybazli\Faker\string;
 
 class ArticleController extends Controller
@@ -143,17 +145,16 @@ class ArticleController extends Controller
             'title' => ['required', 'max:100'],
             'description' => ['required', 'max:600'],
             'thumbnail' => ['required', 'image'],
-            'categories' => ['required'],
+            'category_id' => ['required', Rule::in(Category::all()->pluck('id'))],
             'body' => 'required',
             ]);
 
         $file = $request->file('thumbnail');
         $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
         $file->move(public_path('\\uploads\\imgs'), $file_name);
+
         $validate_data['thumbnail'] = $file_name;
         $tags = $request->validate(['tags' => ['required']])['tags'];
-        unset($validate_data['categories']);
-        $validate_data['category_id'] = 1;
         $validate_data['slug'] = Str::slug($validate_data['title']);
         $tags = explode(",", $tags);
         $validate_data['tags'] = json_encode($tags);

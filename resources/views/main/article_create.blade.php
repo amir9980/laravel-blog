@@ -39,8 +39,14 @@
                 <input  onkeyup="toTag(this)" form="create_article" dir="auto" type="text" name="tags" id="tags" class="form-control w-75 h-50 Tanha" >
             </div>
             <div class="col-12 mt-3" >
-                <label for="categories"><h3 class="Tanha">موضوع</h3></label>
-                <input  form="create_article" dir="rtl" type="text" name="categories" id="categories" class="form-control w-75 h-50 Tanha" >
+                <label for="category_id"><h3 class="Tanha">موضوع</h3></label>
+                <select form="create_article" name="categories" id="category_id" class="form-control w-75 h-50 Tanha">
+                    <option>انتخاب کنید</option>
+                    @foreach(\App\Models\Category::all() as $category)
+                        <option value="{{$category->id}}">{{$category->title}}</option>
+
+                    @endforeach
+                </select>
             </div>
             <div class="col-12 mt-5" dir="rtl">
                 <label for="body"><h3 class="Tanha">متن مقاله</h3></label>
