@@ -109,7 +109,7 @@
 
             <div class="article-details col-5  col-lg-4 col-sm-6 col-md-5 pe-0">
                 <a class="custom-a" href="{{route('article.show',['user' => $user->username,'article' => $article->slug])}}">
-                    <div class="img-bg" style="background-image: url({{asset('/uploads/defaults/article-png.jpg')}});"></div>
+                    <div class="img-bg" style="background-image: url({{is_null($article->thumbnail)?'/uploads/defaults/article-png.jpg':'/uploads/imgs/'.$article->thumbnail}});"></div>
                 </a>
 
             </div>

@@ -45,8 +45,8 @@
         <hr>
         <div class=" mt-1" dir="rtl">
             <h2 class="Tanha">{{$article->title}}</h2>
-            <p class="vazir-rb "> {{$article->body}}</p>
-            @foreach($article->tags as $tag)
+            <p class="vazir-rb "> {!!  $article->body !!}</p>
+            @foreach(json_decode($article->tags, true) as $tag)
                 <span class="badge rounded-pill bg-secondary">{{$tag}}</span>
             @endforeach
 

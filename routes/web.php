@@ -53,6 +53,8 @@ Route::prefix("articles")->group(function () {
     Route::get("/{user:username}/{article:slug}", [ArticleController::class, 'show'])->name('article.show');
     // ----------------------------- create article ----------
     Route::get("/create", [ArticleController::class, 'create'])->name('article.create'); //->middleware('can:create,App\Models\Article');
+    // ----------------------------- store article -----------
+    Route::post("/create", [ArticleController::class, 'store'])->name('article.store'); //->middleware('can:create,App\Models\Article');
     // ----------------------------- single bookmark ---------
     Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
     // ----------------------------- single like -------------
