@@ -48,6 +48,10 @@
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endcan
+                            @can('role',$user)
+                                <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
+                                   title="ویرایش"><span class="oi oi-cog"></span></a>
+                            @endcan
                     </td>
                 </tr>
             @endforeach

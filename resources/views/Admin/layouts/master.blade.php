@@ -33,23 +33,22 @@
                 <a href="{{route('admin.dashboard')}}" class="nav-link">داشبورد</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">اعضا</a>
-            </li>
-            <li class="nav-item">
                 <a href="{{route('user.edit',\Illuminate\Support\Facades\Auth::user()->username)}}" class="nav-link">پروفایل</a>
             </li>
         </ul>
 
         <div class="me-3 d-flex">
             <a href="{{route('admin.notification.users')}}" class="btn btn-sm btn-primary">
-                کاربران جدید <span class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\User::class)->whereSeen(false)->count()}}</span>
+                کاربران جدید <span
+                    class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\User::class)->whereSeen(false)->count()}}</span>
             </a>
             <a href="{{route('admin.notification.comments')}}" class="btn btn-sm btn-success me-2">
-                نظرات جدید <span class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\Comment::class)->whereSeen(false)->count()}}</span>
+                نظرات جدید <span
+                    class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\Comment::class)->whereSeen(false)->count()}}</span>
             </a>
             <form action="{{route('logout')}}" method="POST">
                 @csrf
-            <button type="submit" class="btn btn-sm btn-danger">خروج</button>
+                <button type="submit" class="btn btn-sm btn-danger">خروج</button>
             </form>
         </div>
     </div>
@@ -65,7 +64,7 @@
             <ul class="nav flex-column px-3">
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-dashboard"></span>
-                    <a href="#" class="nav-link my-1 w-100">داشبورد</a>
+                    <a href="{{route('admin.dashboard')}}" class="nav-link my-1 w-100">داشبورد</a>
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-person"></span>
@@ -104,6 +103,27 @@
                     <span class="oi oi-comment-square"></span>
                     <a href="{{route('admin.comment.index')}}" class="nav-link my-1 w-100">نظرات</a>
                 </li>
+
+                <li class="nav-item d-flex align-items-center">
+                    <span class="oi oi-grid-two-up"></span>
+                    <a href="#" class="nav-link my-1 w-100" data-toggle="collapse"
+                       data-target="#catsSubmenu"><span class="oi oi-chevron-left float-end"></span>دسته بندی ها</a>
+                </li>
+
+                <div class="collapse" id="catsSubmenu">
+                    <ul class="nav px-3">
+                        <li class="nav-item">
+                            <a href="{{route('admin.category.index')}}" class="nav-link my-1 w-100">مشاهده همه</a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a
+                                href="{{route('admin.category.create')}}"
+                                class="nav-link my-1 w-100 collapsed"
+
+                            >ایجاد دسته بندی</a>
+                        </li>
+                    </ul>
+                </div>
 
             </ul>
         </div>
