@@ -61,7 +61,7 @@
 
     <div class="row">
         <div
-            class="col-12 col-md-2 bg-dark text-light collapse show"
+            class="col-12 col-md-2 bg-light text-dark collapse show "
             id="sidebar"
         >
             <ul class="nav flex-column px-3">
