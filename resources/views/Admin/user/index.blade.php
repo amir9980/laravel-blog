@@ -16,7 +16,8 @@
                     <select name="status" class="form-control">
                         <option value="">انتخاب کنید</option>
                         <option value="active" @if(request()->query('status') == 'active') selected @endif>فعال</option>
-                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال</option>
+                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
@@ -30,7 +31,8 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker" value="{{request()->query('end_date')}}">
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
+                           value="{{request()->query('end_date')}}">
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -85,7 +87,11 @@
                         @endif
                         @can('role',$user)
                             <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
-                               title="ویرایش"><span class="oi oi-cog"></span></a>
+                               title="نقش"><span class="oi oi-cog"></span></a>
+                        @endcan
+                        @can('update',$user)
+                            <a href="{{route('user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
+                               title="ویرایش"><span class="oi oi-pencil"></span></a>
                         @endcan
                         <a href="{{route('admin.user.articles',$user->username)}}" class="btn btn-sm btn-secondary"
                            title="مشاهده مقالات"><span class="oi oi-list"></span></a>
