@@ -51,13 +51,10 @@
 {{--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
 {{--                </div>--}}
 
-                    <form class="form-inline d-flex" action="#?search">
+                    <form class="form-inline d-flex" id="search" action="{{route('home')}}">
 {{--                        <button class="btn btn-outline-success btn-search" type="submit">جستجو</button>--}}
                             <div class="search">
-
-                                <input class="search_input"  type="search" name="search" placeholder="جستجو...">
-
-
+                                <input class="search_input" value="{{isset($search)?$search:""}}" type="search" name="search" placeholder="جستجو...">
                                 <button type="submit" href="#" class="search_icon"><i class="fa fa-search"></i></button>
                             </div>
                     </form>
