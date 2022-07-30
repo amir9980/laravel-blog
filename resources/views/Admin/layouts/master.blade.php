@@ -29,6 +29,9 @@
 
     <div class="collapse navbar-collapse justify-content-between">
         <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="{{route('home')}}" class="nav-link">بلاگ</a>
+            </li>
             <li class="nav-item active">
                 <a href="{{route('admin.dashboard')}}" class="nav-link">داشبورد</a>
             </li>
