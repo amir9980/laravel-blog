@@ -54,8 +54,15 @@
                             <i  class=" @if(in_array($article->id,$bookmarks)) fa fa-bookmark articles-bookmark @else fa-thin fa-bookmark articles-bookmark @endif" id="{{$article->slug}}" onclick="bookmark(this)"></i>
                         </div>
                         <div class="me-2 ms-4 mt-1 float-start" >
-
-                                <i class=" @if(in_array($article->id,$likes)) fa fa-heart articles-bookmark @else fa-thin fa-heart articles-bookmark @endif" id="{{$article->slug}}" onclick="heart(this)"></i>
+                            <div class="me-2 ms-4 mt-1 float-start" >
+                                @if(auth()->check() and (auth()->id() == $user->id))
+                                    <form id="destroy_article" action="{{route('article.destroy', $article->slug)}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                    <button type="submit" form="destroy_article" class="articles-bookmark text-danger" style="border: none;background: none;font-size: 13px">حذف</button>
+                                @endif
+                            </div>
                             </div>
                         </div>
 

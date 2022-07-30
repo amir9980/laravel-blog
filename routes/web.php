@@ -61,8 +61,10 @@ Route::prefix("articles")->group(function () {
     Route::get("/create", [ArticleController::class, 'create'])->name('article.create')->middleware('can:create,App\Models\Article');
     // ----------------------------- store article ----------
     Route::post("/create", [ArticleController::class, 'store'])->name('article.store')->middleware('can:create,App\Models\Article');
+    // ----------------------------- destroy article ----------
+    Route::delete("{article:slug}/destroy", [ArticleController::class, 'store'])->name('article.store')->middleware('can:create,App\Models\Article');
     // ----------------------------- single bookmark ---------
-    Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
+    Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'destroy'])->name('article.destroy');
     // ----------------------------- single like -------------
     Route::match(['post', 'delete'],"/{article:slug}/like", [ArticleController::class, 'like'])->name('article.like');
     // ----------------------------- create comment ----------
