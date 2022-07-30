@@ -160,6 +160,6 @@ class ArticleController extends Controller
         $validate_data['tags'] = json_encode($tags);
         $validate_data['user_id'] = auth()->id();
         Article::create($validate_data);
-        return Redirect::route('article.show', $validate_data['slug'], ['user' => auth()->user()->username, 'article'=>$validate_data['slug']]);
+        return Redirect::route('article.show', ['user' => auth()->user()->username, 'article'=>$validate_data['slug']]);
     }
 }
