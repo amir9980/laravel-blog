@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::insert([
+        $user = User::create([
             [
                 'name'=>'امیر',
                 'username'=>'amir',
@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
                 'remember_token'=>Str::random(10)
             ]
         ]);
+        $user->profile()->create([]);
         User::factory()
             ->has(Profile::factory()->count(1))
             ->has(Article::factory()
