@@ -29,8 +29,9 @@
 
                     <div class="row me-1">
                     @if(! in_array(request()->route()->getName(),['user.profile', 'register', 'login', 'article.create', 'user.edit']))
+
                         <!-- sidebar -->
-                        @include("main.layouts.includes.sidebar")
+                    @include("main.layouts.includes.sidebar")
                     @endif
 
                     <!-- articles section -->
