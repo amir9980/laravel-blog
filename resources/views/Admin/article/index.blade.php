@@ -66,10 +66,17 @@
                                     <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                                 </form>
                             @endif
-                            @can('update',$article)
-                                <a href="{{route('admin.article.edit',$article->slug)}}" class="btn btn-sm btn-secondary"
-                                   title="ویرایش"><span class="oi oi-pencil"></span></a>
-                            @endcan
+{{--                            @can('update',$article)--}}
+{{--                                <a href="{{route('admin.article.edit',$article->slug)}}" class="btn btn-sm btn-secondary"--}}
+{{--                                   title="ویرایش"><span class="oi oi-pencil"></span></a>--}}
+{{--                            @endcan--}}
+                                @can('delete',$article)
+                                <form action="{{route('article.destroy', $article->slug)}}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span></button>
+                                </form>
+                                @endcan
                             <a href="{{route('admin.article.comments',$article->slug)}}"
                                class="btn btn-sm btn-secondary"
                                title="مشاهده نظرات"><span
