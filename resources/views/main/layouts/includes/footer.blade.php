@@ -4,7 +4,9 @@
 
 <script>
     $(document).ready(function (){
-        $(".loader-div").hide();
+        var loader = $(".loader-div");
+        loader.fadeOut(700);
+        loader.hide('slow');
     });
 </script>
 

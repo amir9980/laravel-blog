@@ -395,14 +395,19 @@ body {
     }
 }
 
+.loader-div {
+    display: none;
+}
 
 .loader-div{
+    animation-fill-mode: forwards;
     background-color: rgba(12, 16, 33, 0.5);
     z-index: 10000;
     width: 100%;
     height: 100%;
     position: fixed;
     text-align: center;
+    display: block;
 }
 .main-loader {
     width: 96px;
@@ -415,7 +420,9 @@ body {
     border-color: #FFF #FFF transparent transparent;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
+
 }
+
 .main-loader::after,
 .main-loader::before {
     content: '';
@@ -457,4 +464,34 @@ body {
     100% {
         transform: rotate(-360deg);
     }
+}
+.password-field{
+    padding-left: 35px;
+    caret-color:transparent;
+    /*line-height: 40px;*/
+    transition: width 0.4s linear;
+}
+
+.input-icons .password-field {
+    direction: rtl;
+    /*padding: 0 10px 0 60px;*/
+    width: 100%;
+    transition: width 0.4s linear;
+}
+
+.visible-icon:hover{
+    color: rgba(0, 0, 0, 0.65);
+    transition: 0.2s;
+}
+.visible-icon {
+    width:30px;
+    height: 30px;
+    position: relative;
+    margin-top: -27px;
+    margin-left: 10px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
 }

@@ -21,10 +21,10 @@
 @yield('style')
 <body>
 
-<div class="loader-div">
+<div class="loader-div" style="animation: fadeBackground 6s;">
     <span class="main-loader"></span>
-</div>
 
+</div>
 @include("main.layouts.includes.header")
 
 <div>

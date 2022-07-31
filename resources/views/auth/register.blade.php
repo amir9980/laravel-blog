@@ -62,8 +62,12 @@
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label float-end Tanha" for="form3Example4c">رمزعبور</label>
-                                            <input  required type="password" name="password" id="form3Example4c" class="form-control @error('password') is-invalid @enderror " />
+                                            <label class="form-label float-end Tanha" for="password">رمزعبور</label>
+                                            <div class="input-icons">
+                                                <input required type="password" name="password" id="password" class="form-control password-field @error('password') is-invalid @enderror " />
+                                                <i class="fa fa-eye visible-icon" id="toggle-password" onclick="visible(this)">
+                                                </i>
+                                            </div>
                                             @error('password')
                                                 <strong class="text-danger vazir-rb float-end mt-1" dir="rtl" style="font-weight: 500;font-size: 15px">
                                                    {{$message}}
@@ -76,7 +80,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label float-end Tanha" for="form3Example4cd">تکرار رمز</label>
-                                            <input  required type="password" name="password_confirmation" id="form3Example4cd" class="form-control" />
+                                            <input  required type="password" name="password_confirmation" id="confirm-password" class="form-control" />
                                         </div>
                                         <i class="fa-thin auth-icon fa-key fa-lg ms-3 fa-fw"></i>
                                     </div>
