@@ -62,13 +62,33 @@ class ArticleController extends Controller
 
     public function bookmark(Request $request, Article $article)
     {
+        $count1 = auth()->user()->user_bookmarks()->count();
+
         $request->user()->bookmarks()->toggle([$article->id]);
+
+        $count2 = auth()->user()->user_bookmarks()->count();
+
+        if ($count1 != $count2) {
+            return response()->json(['status' => true]);
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 
     public function like(Request $request, Article $article)
     {
+        $count1 = auth()->user()->user_likes()->count();
+
         $request->user()->likes()->toggle([$article->id]);
         $article->update(['likes' => $article->likes()->count()]);
+
+        $count2 = auth()->user()->user_likes()->count();
+
+        if ($count1 != $count2) {
+            return response()->json(['status' => true]);
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 
     public function comment_store(Request $request, Article $article)

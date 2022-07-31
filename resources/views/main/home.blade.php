@@ -50,7 +50,7 @@
                         </a>
                         </div>
                         <div class="me-2 ms-3 mt-1 float-start" >
-                            <i  class=" @if(in_array($article->id,$bookmarks)) fa @else fa-thin @endif fa-bookmark articles-bookmark " id="{{$article->slug}}" onclick="bookmark(this)"></i>
+                            <i  class=" @if(in_array($article->id,$bookmarks)) fa @else fa-thin @endif fa-bookmark articles-bookmark " id="{{$article->slug}}" @if(auth()->check()) onclick="bookmark(this) @endif "></i>
                         </div>
                         <div class="me-2 ms-4 mt-1 float-start" >
                             <div class="me-2 ms-4 mt-1 float-start" >
