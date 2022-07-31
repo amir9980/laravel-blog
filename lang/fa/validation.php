@@ -146,6 +146,8 @@ return [
         'body' => 'متن',
         'username' => 'نام کاربری',
         'email' => 'پست الکترونیک',
-        'password' => 'رمزعبور'
+        'password' => 'رمزعبور',
+        'category_id' => 'موضوع',
+        'thumbnail' => 'تصویر شاخص',
     ],
 ];
