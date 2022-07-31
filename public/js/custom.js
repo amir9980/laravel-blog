@@ -40,3 +40,18 @@ function like(item) {
     apply(item, 'like', `post`)
 
 }
+
+function visible(icon) {
+    var input = $("#password");
+    var confirm = $("#confirm-password");
+    if (input.attr("type") === "password") {
+    input.attr("type", "text");
+    confirm.attr("type", "text");
+    icon.className = icon.className.replace(" fa-eye ", " fa-eye-slash ");
+    } else {
+        input.attr("type", "password");
+        confirm.attr("type", "password");
+        icon.className = icon.className.replace(" fa-eye-slash ", " fa-eye ");
+    }
+
+}
