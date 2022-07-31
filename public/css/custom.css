@@ -392,7 +392,8 @@ body {
     }
     100% {
         transform: scale(1) rotate(360deg);
-
+    }
+}
 
 
 .loader-div{
