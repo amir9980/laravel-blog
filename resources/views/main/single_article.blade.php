@@ -76,7 +76,7 @@
                     <div class="form-group col-12">
 
                         <label class="float-end mb-1" for="title">عنوان</label>
-                        <input dir="rtl" class="float-end form-control" id="title" name="title" type="text" >
+                        <input value="{{old('title')}}" dir="rtl" class="float-end form-control" id="title" name="title" type="text" >
 
                     </div>
                     @error('title')
@@ -87,7 +87,7 @@
 
                     <div class="form-group col-12 mt-4" >
                         <label class="float-end Tanha mb-1" for="message">:دیدگاه شما</label>
-                        <textarea name="body" id="message" cols="30" dir="rtl" rows="5" class="form-control vazir-rb" ></textarea>
+                        <textarea name="body" id="message" cols="30" dir="rtl" rows="5" class="form-control vazir-rb" >{{old('body')}}</textarea>
                         @error('body')
                         <div class="text-danger">
                             {{ $message }}

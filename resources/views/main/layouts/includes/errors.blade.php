@@ -1,5 +1,7 @@
-<div class="row">
+<div class="row float-end text-end">
     @foreach($errors->all() as $error)
-        <p class="text-danger">{{$error}}</p>
+        <div class="alert alert-danger" role="alert">
+            {{$error}}
+        </div>
     @endforeach
 </div>

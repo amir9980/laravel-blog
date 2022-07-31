@@ -26,7 +26,7 @@
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label float-end Tanha" for="form3Example3c">پست الکترونیک</label>
-                                                <input  required type="email" name="email" id="form3Example3c" class="form-control @error('email') is-invalid @enderror " />
+                                                <input value="{{old('email')}}" required type="email" name="email" id="form3Example3c" class="form-control @error('email') is-invalid @enderror " />
                                                 @error('email')
                                                 <strong class="text-danger vazir-rb float-end mt-1" dir="rtl" style="font-weight: 500;font-size: 15px">
                                                     {{$message}}
@@ -40,7 +40,7 @@
                                             <div class="form-outline flex-fill mb-0">
                                                 <label class="form-label float-end Tanha" for="password">رمزعبور</label>
                                                 <div class="input-icons">
-                                                <input  required type="password" name="password" id="password" class="form-control password-field @error('password') is-invalid @enderror " />
+                                                <input value="{{old('password')}}"  required type="password" name="password" id="password" class="form-control password-field @error('password') is-invalid @enderror " />
                                                     <i class="fa fa-eye visible-icon" id="toggle-password" onclick="visible(this)">
                                                     </i>
                                                 </div>
@@ -54,8 +54,8 @@
                                         </div>
 
                                             <div class="form-check d-flex justify-content-center mb-5">
-                                                <input  class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                                <label class="form-check-label" for="form2Example3">
+                                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                                                <label class="form-check-label" for="form2Example3c">
                                                     من را به خاطر بسپار
                                                 </label>
                                             </div>
