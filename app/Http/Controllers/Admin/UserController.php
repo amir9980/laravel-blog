@@ -29,8 +29,7 @@ class UserController extends Controller
         $users = empty($request->role) ? $users : $users->where('role_id','=',Role::query()->whereTitle($request->role)->first()->id);
         $users = empty($request->end_date) ? $users : $users->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
 
-        $users = $users->withCount(['comments','articles'=>function(Builder $query){
-        }])->paginate(5)->withQueryString();
+        $users = $users->withCount(['comments','articles'])->paginate(5)->withQueryString();
 
         return view('Admin.user.index',compact('users'));
     }

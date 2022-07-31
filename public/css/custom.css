@@ -377,3 +377,19 @@ body {
 .auth-icon {
     margin-top: 23px;
 }
+.loader
+{
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: zeroRotation 0.8s ease infinite alternate-reverse;
+}
+
+@keyframes zeroRotation {
+    0% {
+        transform: scale(0) rotate(0deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}

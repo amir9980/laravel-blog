@@ -35,7 +35,7 @@
                     <div class="text-end col-2 float-end">
                         <a class="custom-a" href="{{route("user.profile", $user->username)}}">
 
-                        <img src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}" class="rounded-circle profile">
+                        <img src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/imgs/'.$user->profile_image}}" class="rounded-circle profile">
                         </a>
 
                     </div>
@@ -51,8 +51,8 @@
             @endforeach
 
             <div class="me-2 ms-4 mt-1 float-start" >
-
-                <i class=" @if(in_array($article->id,$likes)) fa fa-heart articles-bookmark @else fa-thin fa-heart articles-bookmark @endif" id="{{$article->slug}}" onclick="heart(this)"></i>
+{{--                 @else fa-thin  fa-bookmark articles-bookmark--}}
+                <i class=" @if(in_array($article->id,$likes)) fa @else fa-thin @endif fa-heart articles-bookmark" id="{{$article->slug}}" onclick="like(this)"></i>
             </div>
         </div>
         </div>
