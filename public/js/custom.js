@@ -11,16 +11,16 @@ function apply(item, url, method) {
         dataType: 'json',
         data: {_token:token,_method:method},
         success: function (response) {
-            var status = response.status;
-
-        }, complete: function () {
-            sleep(1500).then(() => {
-                item.className = item.className.replace('loader', '')
+            if (response.status) {
                 if (item.className.includes("fa-thin")) {
                     item.className = item.className.replace(' fa-thin', 'fa');
                 } else {
                     item.className = item.className.replace(' fa', 'fa-thin')
                 }
+            }
+        }, complete: function () {
+            sleep(1400).then(() => {
+                item.className = item.className.replace('loader', '')
                 item.setAttribute('onclick', url+'(this)');
             });
 
