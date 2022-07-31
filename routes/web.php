@@ -49,7 +49,6 @@ Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(functio
 });
 
 
-
 // ----------------------------- home --------------------
 Route::get('/', [ArticleController::class, 'index'])->name("home");
 

@@ -31,13 +31,13 @@ class UserController extends Controller
 
         $users = $users->withCount(['comments','articles'])->paginate(5)->withQueryString();
 
-        return view('Admin.user.index',compact('users'));
+        return view('admin.user.index',compact('users'));
     }
 
     public function edit(User $user)
     {
         Gate::authorize('role',$user);
-        return view('Admin.user.edit',compact('user'));
+        return view('admin.user.edit',compact('user'));
     }
 
     public function update(Request $request,User $user)
@@ -83,7 +83,7 @@ class UserController extends Controller
         $articles = empty($request->end_date) ? $articles : $articles->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
 
         $articles = $articles->paginate(5)->withQueryString();
-        return view('Admin.user.articles',compact('articles'));
+        return view('admin.user.articles',compact('articles'));
     }
 
     public function comments(Request $request,User $user)
@@ -102,7 +102,7 @@ class UserController extends Controller
 
         $comments = $comments->paginate(5)->withQueryString();
 
-        return view('Admin.user.comments',compact('comments'));
+        return view('admin.user.comments',compact('comments'));
     }
 
 

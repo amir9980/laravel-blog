@@ -1,14 +1,15 @@
-@extends('Admin.layouts.master')
-@section('title','ثبت دسته بندی')
+@extends('admin.layouts.master')
+@section('title','ویرایش دسته بندی')
 
 @section('content')
 
-    <form action="{{route('admin.category.store')}}" method="POST">
+    <form action="{{route('admin.category.update',$category->id)}}" method="POST">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="form-group col-md-6">
                 <label>عنوان</label>
-                <input type="text" class="form-control" name="title">
+                <input type="text" class="form-control" name="title" value="{{$category->title}}">
             </div>
             <div class="form-group col-md-6">
                 <label>دسته بالایی</label>

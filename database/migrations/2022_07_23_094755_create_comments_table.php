@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('body');
             $table->unsignedInteger('replied_to')->nullable();
             $table->foreign('replied_to')->references('id')->on('comments')->onDelete('CASCADE');
-            $table->boolean('is_active')->default(0);
+            $table->string('status')->default('new')->comment('new, active, inactive');
             $table->timestamps();
         });
     }
