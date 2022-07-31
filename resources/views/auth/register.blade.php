@@ -25,7 +25,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label float-end Tanha" for="form3Example1c">نام کاربری</label>
-                                            <input   required type="text" name="username" id="form3Example1c" class="form-control @error('username') is-invalid @enderror " />
+                                            <input value="{{old('username')}}"   required type="text" name="username" id="form3Example1c" class="form-control @error('username') is-invalid @enderror " />
                                             @error('username')
                                                 <strong class="text-danger vazir-rb float-end mt-1" dir="rtl" style="font-weight: 500;font-size: 15px">
                                                    {{$message}}
@@ -37,7 +37,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label float-end Tanha" for="form3Example1c">نام و نام خانوادگی</label>
-                                            <input  required dir="auto" type="text" name="name" id="form3Example1c" class="form-control @error('name') is-invalid @enderror " />
+                                            <input value="{{old('name')}}"  required dir="auto" type="text" name="name" id="form3Example1c" class="form-control @error('name') is-invalid @enderror " />
                                             @error('name')
                                                 <strong class="text-danger vazir-rb float-end mt-1" dir="rtl" style="font-weight: 500;font-size: 15px">
                                                    {{$message}}
@@ -50,7 +50,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label float-end Tanha" for="form3Example3c">پست الکترونیک</label>
-                                            <input  required type="email" name="email" id="form3Example3c" class="form-control @error('email') is-invalid @enderror " />
+                                            <input value="{{old('email')}}"  required type="email" name="email" id="form3Example3c" class="form-control @error('email') is-invalid @enderror " />
                                             @error('email')
                                                 <strong class="text-danger vazir-rb float-end mt-1" dir="rtl" style="font-weight: 500;font-size: 15px">
                                                    {{$message}}
@@ -64,7 +64,7 @@
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label float-end Tanha" for="password">رمزعبور</label>
                                             <div class="input-icons">
-                                                <input required type="password" name="password" id="password" class="form-control password-field @error('password') is-invalid @enderror " />
+                                                <input value="{{old('password')}}" required type="password" name="password" id="password" class="form-control password-field @error('password') is-invalid @enderror " />
                                                 <i class="fa fa-eye visible-icon" id="toggle-password" onclick="visible(this)">
                                                 </i>
                                             </div>
@@ -79,8 +79,8 @@
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label float-end Tanha" for="form3Example4cd">تکرار رمز</label>
-                                            <input  required type="password" name="password_confirmation" id="confirm-password" class="form-control" />
+                                            <label class="form-label float-end Tanha" for="confirm-password">تکرار رمز</label>
+                                            <input   required type="password" name="password_confirmation" id="confirm-password" class="form-control" />
                                         </div>
                                         <i class="fa-thin auth-icon fa-key fa-lg ms-3 fa-fw"></i>
                                     </div>

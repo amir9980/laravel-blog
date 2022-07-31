@@ -12,11 +12,11 @@
         <div class="row">
             <div class="col-12 mt-3" >
                 <label for="title"><h3 class="Tanha">عنوان</h3></label>
-                <input form="create_article" dir="auto" type="text" name="title" id="title" class="form-control w-75 h-75 Tanha" style="font-size: 25px;">
+                <input value="{{old('title')}}" form="create_article" dir="auto" type="text" name="title" id="title" class="form-control w-75 h-75 Tanha" style="font-size: 25px;">
             </div>
             <div class="col-12 mt-5">
                 <label for="description"><h3 class="Tanha">توضیحات</h3></label>
-                <textarea rows="5" form="create_article" dir="rtl" type="text" name="description" id="description" class="form-control w-50 vazir-rb"></textarea>
+                <textarea rows="5" form="create_article" dir="rtl" type="text" name="description" id="description" class="form-control w-50 vazir-rb">{{old('description')}}</textarea>
             </div>
             <div class="col-12 mt-5">
                 <div class="">
@@ -28,7 +28,7 @@
                     <div class="container col-md-6">
                         <div class="mb-5">
 
-                            <input form="create_article" class="form-control" name="thumbnail" type="file" accept="image/*" id="formFile" onchange="preview()" style="display: none">
+                            <input value="{{old('thumbnail')}}" form="create_article" class="form-control" name="thumbnail" type="file" accept="image/*" id="formFile" onchange="preview()" style="display: none">
                         </div>
                     </div>
                 </div>
@@ -37,14 +37,14 @@
             </div>
             <div class="col-12 mt-3" >
                 <label for="tags"><h3 class="Tanha">تگ ها</h3></label>
-                <input  onkeyup="toTag(this)" form="create_article" dir="auto" type="text" name="tags" id="tags" class="form-control w-75 h-50 Tanha" >
+                <input value="{{old('tags')}}"  onkeyup="toTag(this)" form="create_article" dir="auto" type="text" name="tags" id="tags" class="form-control w-75 h-50 Tanha" >
             </div>
             <div class="col-12 mt-3" >
                 <label for="category_id"><h3 class="Tanha">موضوع</h3></label>
                 <select form="create_article" name="category_id" id="category_id" class="form-control w-75 h-50 Tanha">
                     <option>انتخاب کنید</option>
                     @foreach(\App\Models\Category::all() as $category)
-                        <option value="{{$category->id}}">{{$category->title}}</option>
+                        <option {{old('category_id') == $category->id?'selected':''}} value="{{$category->id}}">{{$category->title}}</option>
 
                     @endforeach
                 </select>
