@@ -9,16 +9,15 @@
 
             </div>
             @if($articles->count() != 0)
-
                 <div style="margin-top: -50px;">
                     <select form="search" style="width: 100px;float: right"  name="orderBy" class="custom-select custom-select-sm form-control form-control-sm">
-                       <option value="newest" {{$orderBy == "newest"?'selected':''}}>جدیدترین</option>
-                        <option value="name" {{$orderBy == "name"?'selected':''}}>اسم</option>
-                        <option value="likes" {{$orderBy == "likes"?'selected':''}}>محبوب ترین</option>
+                        <option value="newest" {{request()->query('orderBy') == "newest"?'selected':''}}>جدیدترین</option>
+                        <option value="name" {{request()->query('orderBy') == "name"?'selected':''}}>اسم</option>
+                        <option value="likes" {{request()->query('orderBy') == "likes"?'selected':''}}>محبوب ترین</option>
                     </select>
                         <button form="search" type="submit" class="btn btn-primary float-end me-4" style="font-size: 10px">اعمال</button>
                 </div>
-                    @foreach($articles as $article)
+                @foreach($articles as $article)
                 @php
                     $user = $article->user;
                 @endphp
@@ -51,7 +50,7 @@
                         </a>
                         </div>
                         <div class="me-2 ms-3 mt-1 float-start" >
-                            <i  class=" @if(in_array($article->id,$bookmarks)) fa fa-bookmark articles-bookmark @else fa-thin fa-bookmark articles-bookmark @endif" id="{{$article->slug}}" onclick="bookmark(this)"></i>
+                            <i  class=" @if(in_array($article->id,$bookmarks)) fa @else fa-thin @endif fa-bookmark articles-bookmark " id="{{$article->slug}}" onclick="bookmark(this)"></i>
                         </div>
                         <div class="me-2 ms-4 mt-1 float-start" >
                             <div class="me-2 ms-4 mt-1 float-start" >

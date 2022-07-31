@@ -18,8 +18,7 @@
                         <div class="d-flex">
                         <span id="upload_image" type="button" class="fa fa-edit btn btn-link" style="height: 30px;font-size: 25px;width: 120px" onclick="document.getElementById('formFile').click()"></span>
                         <button id="remove_image" style="display: none;height: 30px" onclick="clearImage()" class="btn btn-danger btn-sm mt-3">حذف</button>
-
-                        <img id="frame" class=" mt-5" width="150px" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}">
+                        <img id="frame" class=" mt-5" width="150px" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/imgs/'.$user->profile_image}}">
                     </div>
                     <span class="font-weight-bold" style="margin-right:120px;">{{$user['name']}}</span>
                     <span class="text-black-50" style="margin-right:120px;">{{$user['email']}}</span>

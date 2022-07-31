@@ -14,7 +14,7 @@
                 <div class="card p-3 py-4" style="background:none;border:none">
 
                     <div class="text-center">
-                        <img src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}"  class="rounded-circle profile">
+                        <img src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/imgs/'.$user->profile_image}}"  class="rounded-circle profile">
                     </div>
 
                     <div class="text-center mt-3">
@@ -82,11 +82,11 @@
 
                     </div>
                     <a class="custom-a " href="{{route("user.profile", $user->username)}}">
-                        <img class="profile" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}"  >
+                        <img class="profile" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/imgs/'.$user->profile_image}}"  >
                     </a>
                 </div>
                 <div class="me-2 ms-3 mt-1 float-start" >
-                    <i  class=" @if(in_array($article->id,$bookmarks)) fa fa-bookmark articles-bookmark @else fa-thin fa-bookmark articles-bookmark @endif" id="{{$article->slug}}" onclick="bookmark(this)"></i>
+                    <i  class=" @if(in_array($article->id,$bookmarks)) fa @else fa-thin @endif fa-bookmark articles-bookmark " id="{{$article->slug}}" onclick="bookmark(this)"></i>
                 </div>
                 <div class="me-2 ms-4 mt-1 float-start" >
                     @if(auth()->check() and auth()->id() == $user->id)
