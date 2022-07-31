@@ -51,7 +51,6 @@
             @endforeach
 
             <div class="me-2 ms-4 mt-1 float-start" >
-{{--                 @else fa-thin  fa-bookmark articles-bookmark--}}
                 <i class=" @if(in_array($article->id,$likes)) fa @else fa-thin @endif fa-heart articles-bookmark" id="{{$article->slug}}" onclick="like(this)"></i>
             </div>
         </div>
