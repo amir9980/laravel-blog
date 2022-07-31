@@ -30,7 +30,7 @@ class NotificationController extends Controller
 
         $users = $users->whereIn('id', $ids)->paginate(5)->withQueryString();
 
-        return view('Admin.notification.users', compact('users'));
+        return view('admin.notification.users', compact('users'));
     }
 
     public function comments(Request $request)
@@ -50,6 +50,6 @@ class NotificationController extends Controller
         $comments = empty($request->end_date) ? $comments : $comments->where('created_at', '<', Jalalian::fromFormat('Y/m/d', $request->end_date)->toCarbon());
 
         $comments = $comments->whereIn('id', $ids)->paginate(5)->withQueryString();
-        return view('Admin.notification.comments', compact('comments'));
+        return view('admin.notification.comments', compact('comments'));
     }
 }

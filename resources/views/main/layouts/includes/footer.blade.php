@@ -3,6 +3,11 @@
 
 
 <script>
+
+    $(document).ready(function (){
+        $(".loader-div").hide();
+    });
+
     function apply(slug, url, method) {
         $.ajax({
             method: 'POST',

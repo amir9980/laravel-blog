@@ -1,4 +1,4 @@
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title','کاربران جدید')
 
@@ -13,7 +13,8 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker" value="{{request()->query('end_date')}}">
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
+                           value="{{request()->query('end_date')}}">
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -48,10 +49,10 @@
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endcan
-                            @can('role',$user)
-                                <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
-                                   title="نقش"><span class="oi oi-cog"></span></a>
-                            @endcan
+                        @can('role',$user)
+                            <a href="{{route('admin.user.edit',$user->username)}}" class="btn btn-sm btn-secondary"
+                               title="نقش"><span class="oi oi-cog"></span></a>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
@@ -64,7 +65,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{$users->links()}}
+        {{$users->onEachSide(1)->links()}}
     </div>
 @endsection
 
