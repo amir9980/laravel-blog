@@ -9,7 +9,6 @@
 </style>
 @endsection
 @section('content')
-
     <div class="row">
 
         <div class=" justify-content-end">

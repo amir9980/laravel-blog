@@ -51,7 +51,7 @@
             </div>
             <div class="col-12 mt-5" dir="rtl">
                 <label for="body"><h3 class="Tanha">متن مقاله</h3></label>
-                <textarea rows="5" form="create_article" dir="rtl" type="text" name="body" id="body" class="form-control w-100 vazir-rb"></textarea>
+                <textarea rows="5" form="create_article" dir="rtl" type="text" name="body" id="body" class="form-control w-100 vazir-rb">{!! old('body') !!}</textarea>
             </div>
             <div class="col-12 mt-5" dir="rtl">
                 <button  form="create_article" dir="rtl" type="submit" class="btn btn-success w-50 vazir-rb">ارسال</button>
