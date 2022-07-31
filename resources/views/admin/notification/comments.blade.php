@@ -1,9 +1,8 @@
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 
-@section('title','نظرات')
+@section('title','نظرات جدید')
 
 @section('content')
-
     <div>
         <h4>جستجو</h4>
         <form action="#">
@@ -11,15 +10,6 @@
                 <div class="col-md-2 form-group">
                     <label>عنوان</label>
                     <input class="form-control" name="title" type="text" value="{{request()->query('title')}}">
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>وضعیت</label>
-                    <select name="status" class="form-control">
-                        <option value="">انتخاب کنید</option>
-                        <option value="active" @if(request()->query('status') == 'active') selected @endif>فعال</option>
-                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال
-                        </option>
-                    </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>آخرین تاریخ ثبت</label>
@@ -34,13 +24,11 @@
         </form>
     </div>
 
-
     <table class="table table-bordered table-striped text-center mt-5">
         <thead>
         <th>ردیف</th>
         <th>عنوان</th>
         <th>متن</th>
-        <th>وضعیت</th>
         <th>تاریخ ثبت</th>
         <th>عملیات</th>
         </thead>
@@ -54,31 +42,21 @@
                     <td>{{$iteration}}</td>
                     <td><a href="#">{{\Illuminate\Support\Str::limit($comment->title,30)}}</a></td>
                     <td>{{\Illuminate\Support\Str::limit($comment->body,30)}}</td>
-                    <td>
-                        {{$comment->is_active ? 'فعال' : 'غیر فعال'}}
-                    </td>
                     <td>{{\Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%A, %d %B %y')}}</td>
                     <td class="d-flex justify-content-around">
                         @can('status',$comment)
-                            @if($comment->is_active)
-                                <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-sm btn-danger">غیر فعال سازی</button>
-                                </form>
-                            @else
-                                <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
-                                </form>
-                            @endif
+                            <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
+                            </form>
                         @endcan
                         @can('delete',$comment)
                             <form action="{{route('admin.comment.delete',$comment->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span></button>
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span>
+                                </button>
                             </form>
                         @endcan
                     </td>
@@ -92,8 +70,15 @@
         </tbody>
     </table>
 
+
     <div class="d-flex justify-content-center">
-        {{$comments->links()}}
+        {{$comments->onEachSide(1)->links()}}
     </div>
+@endsection
+
+
+@section('script')
+
+
 
 @endsection

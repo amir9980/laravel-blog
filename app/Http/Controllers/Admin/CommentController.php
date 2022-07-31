@@ -26,7 +26,7 @@ class CommentController extends Controller
 
         $comments = $comments->paginate(5)->withQueryString();
 
-        return view('Admin.comment.index',compact('comments'));
+        return view('admin.comment.index',compact('comments'));
     }
 
 

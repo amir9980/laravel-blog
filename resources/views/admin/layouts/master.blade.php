@@ -15,15 +15,18 @@
     <title>@yield('title')</title>
 </head>
 <body>
+<div class="loader-div">
+<span class="loader"></span>
+</div>
 <nav class="navbar sticky-top bg-white navbar-expand-md navbar-light p-0">
     <div class="d-flex align-items-center">
         <a href="#" class="navbar-brand bg-light m-0 py-3 px-5">
             پنل مدیریت
         </a>
         <span
-            class="oi oi-menu ms-4"
-            data-toggle="collapse"
-            data-target="#sidebar"
+                class="oi oi-menu ms-4"
+                data-toggle="collapse"
+                data-target="#sidebar"
         ></span>
     </div>
 
@@ -43,11 +46,11 @@
         <div class="me-3 d-flex">
             <a href="{{route('admin.notification.users')}}" class="btn btn-sm btn-primary">
                 کاربران جدید <span
-                    class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\User::class)->whereSeen(false)->count()}}</span>
+                        class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\User::class)->whereSeen(false)->count()}}</span>
             </a>
             <a href="{{route('admin.notification.comments')}}" class="btn btn-sm btn-success me-2">
                 نظرات جدید <span
-                    class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\Comment::class)->whereSeen(false)->count()}}</span>
+                        class="badge bg-light text-dark">{{\App\Models\Notification::query()->whereNotifiable_type(\App\Models\Comment::class)->whereSeen(false)->count()}}</span>
             </a>
             <form action="{{route('logout')}}" method="POST">
                 @csrf
@@ -61,8 +64,8 @@
 
     <div class="row">
         <div
-            class="col-12 col-md-2 bg-light text-dark collapse show "
-            id="sidebar"
+                class="col-12 col-md-2 bg-light text-dark collapse show "
+                id="sidebar"
         >
             <ul class="nav flex-column px-3">
                 <li class="nav-item d-flex align-items-center">
@@ -77,10 +80,10 @@
                     <div class="d-flex align-items-center">
                         <span class="oi oi-book"></span>
                         <a
-                            href="#"
-                            class="nav-link my-1 w-100 collapsed"
-                            data-toggle="collapse"
-                            data-target="#articlesSubmenu"
+                                href="#"
+                                class="nav-link my-1 w-100 collapsed"
+                                data-toggle="collapse"
+                                data-target="#articlesSubmenu"
                         >مقالات
                             <span class="oi oi-chevron-left float-end"></span>
                         </a>
@@ -92,8 +95,8 @@
                             </li>
                             <li class="nav-item w-100">
                                 <a
-                                    href="{{route('article.create')}}"
-                                    class="nav-link my-1 w-100 collapsed"
+                                        href="{{route('article.create')}}"
+                                        class="nav-link my-1 w-100 collapsed"
 
                                 >ارسال مقاله
                                 </a>
@@ -120,8 +123,8 @@
                         </li>
                         <li class="nav-item w-100">
                             <a
-                                href="{{route('admin.category.create')}}"
-                                class="nav-link my-1 w-100 collapsed"
+                                    href="{{route('admin.category.create')}}"
+                                    class="nav-link my-1 w-100 collapsed"
 
                             >ایجاد دسته بندی</a>
                         </li>
@@ -132,7 +135,7 @@
         </div>
 
         <div class="col-12 col-md-10 ms-md-auto p-4 bg-light" id="main">
-            @include('Admin.includes.errors')
+            @include('admin.includes.errors')
             @yield('content')
 
 
@@ -147,6 +150,10 @@
 <script src="{{asset('panel/js/kamadatepicker.min.js')}}"></script>
 
 <script>
+    $(document).ready(function (){
+        $(".loader-div").hide();
+    });
+
     kamaDatepicker('persianDatePicker', {
         buttonsColor: "red",
         markToday: true,
@@ -158,9 +165,9 @@
 </script>
 
 <script
-    src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"
+        src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"
 ></script>
 
 

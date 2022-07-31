@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedInteger('likes')->default(0);
             $table->string('thumbnail')->nullable();
             $table->json('tags')->nullable();
-            $table->boolean('is_active')->default(1);
+            $table->string('status')->default('new')->comment('new, active, inactive');
             $table->boolean('pined')->default(0);
             $table->timestamps();
         });

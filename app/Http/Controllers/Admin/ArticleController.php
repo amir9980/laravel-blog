@@ -32,7 +32,7 @@ class ArticleController extends Controller
         $articles = $articles->withCount(['comments'=>function(Builder $query){
         }])->paginate(5)->withQueryString();
 
-        return view('Admin.article.index',compact('articles'));
+        return view('admin.article.index',compact('articles'));
     }
 
     /**
@@ -42,7 +42,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-//        return view('Admin.article.create');
+//        return view('admin.article.create');
     }
 
     /**
@@ -128,6 +128,6 @@ class ArticleController extends Controller
         $comments = empty($request->end_date) ? $comments : $comments->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
 
         $comments = $comments->paginate(5)->withQueryString();
-        return view('Admin.article.comments',compact('comments'));
+        return view('admin.article.comments',compact('comments'));
     }
 }

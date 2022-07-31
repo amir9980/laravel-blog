@@ -1,4 +1,4 @@
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title','نظرات')
 
@@ -33,6 +33,7 @@
 
         </form>
     </div>
+
 
     <table class="table table-bordered table-striped text-center mt-5">
         <thead>
@@ -93,7 +94,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{$comments->links()}}
+        {{$comments->onEachSide(1)->links()}}
     </div>
 
 @endsection

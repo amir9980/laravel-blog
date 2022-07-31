@@ -1,4 +1,4 @@
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title','مقالات')
 
@@ -17,12 +17,14 @@
                     <select name="status" class="form-control">
                         <option value="">انتخاب کنید</option>
                         <option value="active" @if(request()->query('status') == 'active') selected @endif>فعال</option>
-                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال</option>
+                        <option value="inactive" @if(request()->query('status') == 'inactive') selected @endif>غیرفعال
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker" value="{{request()->query('end_date')}}">
+                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
+                           value="{{request()->query('end_date')}}">
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -69,9 +71,13 @@
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endif
-                        @can('update',$article) <a href="{{route('admin.article.edit',$article->slug)}}" class="btn btn-sm btn-secondary" title="ویرایش"><span class="oi oi-cog"></span></a> @endcan
-                        <a href="{{route('admin.article.comments',$article->slug)}}" class="btn btn-sm btn-secondary" title="مشاهده نظرات"><span
-                                class="oi oi-comment-square"></span></a>
+                        @can('update',$article)
+                            <a href="{{route('admin.article.edit',$article->slug)}}" class="btn btn-sm btn-secondary"
+                               title="ویرایش"><span class="oi oi-cog"></span></a>
+                        @endcan
+                        <a href="{{route('admin.article.comments',$article->slug)}}" class="btn btn-sm btn-secondary"
+                           title="مشاهده نظرات"><span
+                                    class="oi oi-comment-square"></span></a>
                     </td>
                 </tr>
             @endforeach
@@ -84,7 +90,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{$articles->links()}}
+        {{$articles->onEachSide(1)->links()}}
     </div>
 
 @endsection
