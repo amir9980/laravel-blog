@@ -1,4 +1,4 @@
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title','کاربران')
 
@@ -110,7 +110,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{$users->links()}}
+        {{$users->onEachSide(1)->links()}}
     </div>
 @endsection
 

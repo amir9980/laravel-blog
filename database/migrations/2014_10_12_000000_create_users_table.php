@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role_id')->default(1)->comment('1: user, 2: writer, 3: watcher, 4:admin');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->boolean('is_active')->default(1);
+            $table->string('status')->default('new')->comment('new, active, inactive');
             $table->string('profile_image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

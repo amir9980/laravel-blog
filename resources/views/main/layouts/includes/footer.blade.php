@@ -3,7 +3,9 @@
 
 
 <script>
-
+    $(document).ready(function (){
+        $(".loader-div").hide();
+    });
 </script>
 
 <script src="/js/custom.js"></script>

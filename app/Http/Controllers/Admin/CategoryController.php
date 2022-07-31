@@ -12,19 +12,19 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::whereParent_id(null)->paginate(5);
-        return view('Admin.category.index',compact('categories'));
+        return view('admin.category.index',compact('categories'));
     }
 
     public function edit(Category $category)
     {
         Gate::authorize('update',$category);
-        return view('Admin.category.edit',compact('category'));
+        return view('admin.category.edit',compact('category'));
     }
 
     public function create()
     {
         Gate::authorize('create',Category::class);
-        return view('Admin.category.create');
+        return view('admin.category.create');
     }
 
     public function store(Request $request)

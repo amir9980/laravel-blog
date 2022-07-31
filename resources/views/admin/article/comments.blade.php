@@ -1,4 +1,4 @@
-@extends('Admin.layouts.master')
+@extends('admin.layouts.master')
 
 @section('title','نظرات')
 
@@ -94,7 +94,7 @@
     </table>
 
     <div class="d-flex justify-content-center">
-        {{$comments->links()}}
+        {{$comments->onEachSide(1)->links()}}
     </div>
 
 @endsection
