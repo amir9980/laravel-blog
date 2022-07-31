@@ -378,6 +378,23 @@ body {
     margin-top: 23px;
 }
 
+.loader
+{
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: zeroRotation 0.8s ease infinite alternate-reverse;
+}
+
+@keyframes zeroRotation {
+    0% {
+        transform: scale(0) rotate(0deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
 
 .loader-div{
     background-color: rgba(12, 16, 33, 0.5);
@@ -387,7 +404,7 @@ body {
     position: fixed;
     text-align: center;
 }
-.loader {
+.main-loader {
     width: 96px;
     height: 96px;
     border-radius: 50%;
@@ -399,8 +416,8 @@ body {
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
-.loader::after,
-.loader::before {
+.main-loader::after,
+.main-loader::before {
     content: '';
     box-sizing: border-box;
     position: absolute;
@@ -418,7 +435,7 @@ body {
     animation: rotationBack 0.5s linear infinite;
     transform-origin: center center;
 }
-.loader::before {
+.main-loader::before {
     width: 64px;
     height: 64px;
     border-color: #FFF #FFF transparent transparent;
