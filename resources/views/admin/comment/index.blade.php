@@ -21,9 +21,14 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
-                           value="{{request()->query('end_date')}}">
+                    <label>بازه زمانی ثبت</label>
+                    <div class="input-group">
+                        <input class="form-control" name="start_date" type="text" data-jdp
+                               value="{{request()->query('start_date')}}" placeholder="از">
+
+                        <input class="form-control" name="end_date" type="text" data-jdp
+                               value="{{request()->query('end_date')}}" placeholder="تا">
+                    </div>
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -54,21 +59,26 @@
                     <td><a href="#">{{\Illuminate\Support\Str::limit($comment->title,30)}}</a></td>
                     <td>{{\Illuminate\Support\Str::limit($comment->body,30)}}</td>
                     <td>
-                        {{$comment->is_active ? 'فعال' : 'غیر فعال'}}
+                        @if($comment->status == 'new')جدید
+                        @elseif($comment->status == 'inactive')غیرفعال
+                        @elseif($comment->status == 'active')فعال
+                        @endif
                     </td>
                     <td>{{\Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%A, %d %B %y')}}</td>
                     <td class="d-flex justify-content-around">
                         @can('status',$comment)
-                            @if($comment->is_active)
+                            @if($comment->status == 'active')
                                 <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="action" value="deactivate">
                                     <button type="submit" class="btn btn-sm btn-danger">غیر فعال سازی</button>
                                 </form>
                             @else
                                 <form action="{{route('admin.comment.status',$comment->id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="action" value="activate">
                                     <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                                 </form>
                             @endif

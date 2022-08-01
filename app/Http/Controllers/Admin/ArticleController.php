@@ -31,7 +31,7 @@ class ArticleController extends Controller
             $articles = $articles->where('title','LIKE','%'.$request->title.'%');
         }
         if ($request->has('status')&&!empty($request->status)) {
-            $articles = $articles->where('is_active','=',$request->status == 'active');
+            $articles = $articles->where('status','=',$request->status);
         }
         if ($request->has('start_date')&&!empty($request->start_date)){
             $articles = $articles->where('created_at','>=',Jalalian::fromFormat('Y/m/d',$request->start_date)->toCarbon());
@@ -112,11 +112,14 @@ class ArticleController extends Controller
         //
     }
 
-    public function status(Article $article)
+    public function status(Request $request,Article $article)
     {
+        $request->validate([
+            'action'=>'required|in:activate,deactivate'
+        ]);
         Gate::authorize('status',Article::class);
 
-        $article->is_active = !$article->is_active;
+        $article->status = $request->action == 'activate' ? 'active' : 'inactive';
         $article->save();
 
         return back()->with(['message'=>'done']);
@@ -136,7 +139,7 @@ class ArticleController extends Controller
             $comments = $comments->where('title','LIKE','%'.$request->title.'%');
         }
         if ($request->has('status')&&!empty($request->status)){
-            $comments = $comments->where('is_active','=',$request->status == 'active');
+            $comments = $comments->where('status','=',$request->status);
         }
         if ($request->has('start_date')&&!empty($request->start_date)){
             $comments = $comments->where('created_at','>=',Jalalian::fromFormat('Y/m/d',$request->start_date)->toCarbon());

@@ -28,7 +28,7 @@ class UserController extends Controller
             $users = $users->where('username', 'LIKE', '%' . $request->username . '%');
         }
         if ($request->has('status') && !empty($request->status)) {
-            $users = $users->where('is_active', '=', $request->status == 'active');
+            $users = $users->where('status', '=', $request->status);
         }
         if ($request->has('role') && !empty($request->role)) {
             $users = $users->where('role_id', '=', Role::query()->whereTitle($request->role)->first()->id);
@@ -68,12 +68,15 @@ class UserController extends Controller
 
     }
 
-    public function status(User $user)
+    public function status(Request $request,User $user)
     {
+        $request->validate([
+            'action'=>'required|in:activate,deactivate'
+        ]);
+
         Gate::authorize('status', $user);
 
-        $user->is_active = !$user->is_active;
-        $user->notifications()->delete();
+        $user->status = $request->action == 'activate' ? 'active' : 'inactive';
         $user->save();
 
         return back()->with(['message' => 'done']);
@@ -94,7 +97,7 @@ class UserController extends Controller
             $articles = $articles->where('title', 'LIKE', '%' . $request->title . '%');
         }
         if ($request->has('status') && !empty($request->status)) {
-            $articles = $articles->where('is_active', '=', $request->status == 'active');
+            $articles = $articles->where('status', '=', $request->status);
         }
         if ($request->has('start_date') && !empty($request->start_date)) {
             $articles = $articles->where('created_at', '>=', Jalalian::fromFormat('Y/m/d', $request->start_date)->toCarbon());
@@ -122,7 +125,7 @@ class UserController extends Controller
             $comments = $comments->where('title', 'LIKE', '%' . $request->title . '%');
         }
         if ($request->has('status') && !empty($request->status)) {
-            $comments = $comments->where('is_active', '=', $request->status == 'active');
+            $comments = $comments->where('status', '=', $request->status);
         }
         if ($request->has('start_date') && !empty($request->start_date)) {
             $comments = $comments->where('created_at', '>=', Jalalian::fromFormat('Y/m/d', $request->start_date)->toCarbon());

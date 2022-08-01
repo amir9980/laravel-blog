@@ -22,9 +22,14 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
-                           value="{{request()->query('end_date')}}">
+                    <label>بازه زمانی ثبت</label>
+                    <div class="input-group">
+                        <input class="form-control" name="start_date" type="text" data-jdp
+                               value="{{request()->query('start_date')}}" placeholder="از">
+
+                        <input class="form-control" name="end_date" type="text" data-jdp
+                               value="{{request()->query('end_date')}}" placeholder="تا">
+                    </div>
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>
@@ -54,20 +59,25 @@
                     <td><a href="#">{{\Illuminate\Support\Str::limit($article->title,30)}}</a></td>
                     <td>{{\Illuminate\Support\Str::limit($article->description,30)}}</td>
                     <td>
-                        {{$article->is_active ? 'فعال' : 'غیر فعال'}}
+                        @if($article->status == 'new')جدید
+                        @elseif($article->status == 'inactive')غیرفعال
+                        @elseif($article->status == 'active')فعال
+                        @endif
                     </td>
                     <td>{{\Morilog\Jalali\Jalalian::forge($article->created_at)->format('%A, %d %B %y')}}</td>
                     <td class="d-flex justify-content-around">
-                        @if($article->is_active)
+                        @if($article->status == 'active')
                             <form action="{{route('admin.article.status',$article->slug)}}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="action" value="deactivate">
                                 <button type="submit" class="btn btn-sm btn-danger">غیر فعال سازی</button>
                             </form>
                         @else
                             <form action="{{route('admin.article.status',$article->slug)}}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="action" value="activate">
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endif
