@@ -75,12 +75,34 @@
                             @endif
                         @endcan
                         @can('delete',$comment)
-                            <form action="{{route('admin.comment.delete',$comment->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-trash"></span>
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteComment{{$comment->id}}"><span class="oi oi-trash"></span>
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteComment{{$comment->id}}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">آیا مطمئن هستید؟</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{route('admin.comment.delete',$comment->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary me-auto ms-0" data-bs-dismiss="modal">
+                                                انصراف
+                                            </button>
+                                            <button type="submit" class="btn btn-outline-danger">حذف</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @endcan
                     </td>
                 </tr>
@@ -98,3 +120,6 @@
     </div>
 
 @endsection
+
+
+
