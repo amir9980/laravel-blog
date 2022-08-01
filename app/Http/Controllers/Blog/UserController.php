@@ -13,47 +13,6 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -69,6 +28,22 @@ class UserController extends Controller
 
     }
 
+    public function save_file($request, $name, $user)
+    {
+        $changed = false;
+        if (! is_null($request->file('profile_image'))) {
+            if (! is_null($user_profile_image = auth()->user()->profile_image) and File::exists(public_path("\\uploads\\imgs".$user_profile_image))) {
+                File::delete(public_path('\\uploads\\imgs'.$user_profile_image));
+            }
+        $request->validate([$name => 'image']);
+        $file = $request->file($name);
+        $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
+        $file->move(public_path('\\uploads\\imgs'), $file_name);
+        $user->update(['profile_image' => $file_name]);
+            $changed = true;
+        }
+        return $changed;
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -82,39 +57,13 @@ class UserController extends Controller
             'username' => ['required', 'string', 'max:255','alpha_dash','regex:/^[a-zA-Z0-9._]+$/i'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::notIn(User::whereNot("id", auth()->id())->get()->pluck("email"))],
-            'bio' => ['max:600']
+            'bio' => ['max:400']
         ]);
 
+        $this->save_file($request, 'profile_image', $user);
 
+        $medias = $this->convert_medias($request->social_media);
 
-        if (! is_null($request->file('profile_image'))) {
-            if (! is_null($user_profile_image = $user->profile_image) and File::exists(public_path("\\uploads\\imgs".$user_profile_image))) {
-                File::delete(public_path('\\uploads\\imgs'.$user_profile_image));
-            }
-            $request->validate(['profile_image' => 'image']);
-            $file = $request->file('profile_image');
-            $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
-            $file->move(public_path('\\uploads\\imgs'), $file_name);
-            $user->update(['profile_image' => $file_name]);
-        }
-
-        $medias = [
-            "https://instagram.com/",
-            "https://t.me/",
-            "https://www.linkedin.com/in/",
-            "https://github.com/",
-        ];
-        $medias_keys = ["instagram", 'telegram', 'linkedin', 'github'];
-
-        $social_medias = $request->social_media;
-        $json_medias = [];
-        foreach ($social_medias as $key=>$social_media) {
-            if (is_null($social_media)) {
-                continue;
-            }
-            $url = (str_contains($social_media,"/"))?($social_media):(($medias[$key].$social_media));
-            $json_medias[$medias_keys[$key]] = $url;
-        }
         $user->update([
             'name' => $validate_data['name'],
             'email' => $validate_data['email'],
@@ -122,7 +71,8 @@ class UserController extends Controller
         ]);
         $user->profile->update([
             'username' => $validate_data['username'],
-            'social_media' => json_encode($json_medias)
+            'social_media' => json_encode($medias),
+            'bio' => $validate_data['bio']
         ]);
 
         return Redirect::route("user.profile", $user);
@@ -148,14 +98,38 @@ class UserController extends Controller
 
     public function profile(User $user)
     {
+        $bookmarks = [];
+        $likes = [];
+
         if (auth()->check()){
             $bookmarks = auth()->user()->user_bookmarks->pluck('article_id')->toArray();
             $likes = auth()->user()->user_likes->pluck('article_id')->toArray();
-        } else{
-            $bookmarks = [];
-            $likes = [];
         }
+
         $articles = $user->articles()->latest()->paginate(10);
+
         return view("main.profile", compact('articles', 'user', 'bookmarks', 'likes'));
+    }
+
+    protected function convert_medias($social_medias)
+    {
+        $json_medias = [];
+        $medias = [
+            "https://instagram.com/",
+            "https://t.me/",
+            "https://www.linkedin.com/in/",
+            "https://github.com/",
+        ];
+        $medias_keys = ["instagram", 'telegram', 'linkedin', 'github'];
+        foreach ($social_medias as $key=>$social_media) {
+            if (is_null($social_media)) {
+                continue;
+            }
+            $url = (str_contains($social_media,"/"))?($social_media):(($medias[$key].$social_media));
+            $json_medias[$medias_keys[$key]] = $url;
+        }
+
+        return $json_medias;
+
     }
 }

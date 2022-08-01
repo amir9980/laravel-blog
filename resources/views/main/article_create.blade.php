@@ -69,7 +69,6 @@
             var img_src = URL.createObjectURL(event.target.files[0]);
             frame.src = img_src;
             document.getElementById('formFile').value = img_src;
-
         }
         function clearImage() {
             document.getElementById("remove_image").style.display = "none";
