@@ -30,9 +30,14 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>آخرین تاریخ ثبت</label>
-                    <input class="form-control" name="end_date" type="text" id="persianDatePicker"
-                           value="{{request()->query('end_date')}}">
+                    <label>بازه زمانی ثبت</label>
+                    <div class="input-group">
+                    <input class="form-control" name="start_date" type="text" data-jdp
+                           value="{{request()->query('start_date')}}" placeholder="از">
+
+                    <input class="form-control" name="end_date" type="text" data-jdp
+                           value="{{request()->query('end_date')}}" placeholder="تا">
+                    </div>
                 </div>
                 <div class="col-md-2 form-group">
                     <button type="submit" class="btn btn-sm btn-info">فیلتر</button>

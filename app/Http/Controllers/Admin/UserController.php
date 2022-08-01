@@ -16,93 +16,124 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'username'=>'nullable|string|max:100',
-            'status'=>'nullable|string|in:active,inactive',
-            'role'=>'nullable|string|in:user,writer,watcher,admin',
-            'end_date'=>'nullable|date'
+            'username' => 'nullable|string|max:100',
+            'status' => 'nullable|string|in:active,inactive',
+            'role' => 'nullable|string|in:user,writer,watcher,admin',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date'
         ]);
 
         $users = User::query();
+        if ($request->has('username') && !empty($request->username)) {
+            $users = $users->where('username', 'LIKE', '%' . $request->username . '%');
+        }
+        if ($request->has('status') && !empty($request->status)) {
+            $users = $users->where('is_active', '=', $request->status == 'active');
+        }
+        if ($request->has('role') && !empty($request->role)) {
+            $users = $users->where('role_id', '=', Role::query()->whereTitle($request->role)->first()->id);
+        }
+        if ($request->has('start_date') && !empty($request->start_date)) {
+            $users = $users->where('created_at', '>=', Jalalian::fromFormat('Y/m/d', $request->start_date)->toCarbon());
+        }
+        if ($request->has('end_date') && !empty($request->end_date)) {
+            $users = $users->where('created_at', '<=', Jalalian::fromFormat('Y/m/d', $request->end_date)->toCarbon());
+        }
 
-        $users = empty($request->username) ? $users : $users->where('username','LIKE','%'.$request->username.'%');
-        $users = empty($request->status) ? $users : $users->where('is_active','=',$request->status == 'active');
-        $users = empty($request->role) ? $users : $users->where('role_id','=',Role::query()->whereTitle($request->role)->first()->id);
-        $users = empty($request->end_date) ? $users : $users->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        $users = $users->withCount(['comments', 'articles'])->paginate(5)->withQueryString();
 
-        $users = $users->withCount(['comments','articles'])->paginate(5)->withQueryString();
-
-        return view('admin.user.index',compact('users'));
+        return view('admin.user.index', compact('users'));
     }
 
     public function edit(User $user)
     {
-        Gate::authorize('role',$user);
-        return view('admin.user.edit',compact('user'));
+        Gate::authorize('role', $user);
+        return view('admin.user.edit', compact('user'));
     }
 
-    public function update(Request $request,User $user)
+    public function update(Request $request, User $user)
     {
         $roles = Role::query()->pluck('title');
         $request->validate([
-            'role'=>['required','string',Rule::in($roles)]
+            'role' => ['required', 'string', Rule::in($roles)]
         ]);
 
-        Gate::authorize('role',$user);
+        Gate::authorize('role', $user);
 
-        $role = Role::query()->where('title','=',$request->role)->firstOrFail();
+        $role = Role::query()->where('title', '=', $request->role)->firstOrFail();
         $user->role_id = $role->id;
         $user->save();
 
-        return redirect()->route('admin.user.index')->with(['message','done']);
+        return redirect()->route('admin.user.index')->with(['message', 'done']);
 
     }
 
     public function status(User $user)
     {
-        Gate::authorize('status',$user);
+        Gate::authorize('status', $user);
 
         $user->is_active = !$user->is_active;
         $user->notifications()->delete();
         $user->save();
 
-        return back()->with(['message'=>'done']);
+        return back()->with(['message' => 'done']);
     }
 
-    public function articles(Request $request,User $user)
+    public function articles(Request $request, User $user)
     {
         $request->validate([
-            'title'=>'nullable|string|max:100',
-            'status'=>'nullable|string|in:active,inactive',
-            'end_date'=>'nullable|date'
+            'title' => 'nullable|string|max:100',
+            'status' => 'nullable|string|in:active,inactive',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date'
         ]);
 
         $articles = $user->articles();
 
-        $articles = empty($request->title) ? $articles : $articles->where('title','LIKE','%'.$request->title.'%');
-        $articles = empty($request->status) ? $articles : $articles->where('is_active','=',$request->status == 'active');
-        $articles = empty($request->end_date) ? $articles : $articles->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        if ($request->has('title') && !empty($request->title)) {
+            $articles = $articles->where('title', 'LIKE', '%' . $request->title . '%');
+        }
+        if ($request->has('status') && !empty($request->status)) {
+            $articles = $articles->where('is_active', '=', $request->status == 'active');
+        }
+        if ($request->has('start_date') && !empty($request->start_date)) {
+            $articles = $articles->where('created_at', '>=', Jalalian::fromFormat('Y/m/d', $request->start_date)->toCarbon());
+        }
+        if ($request->has('end_date') && !empty($request->end_date)) {
+            $articles = $articles->where('created_at', '<=', Jalalian::fromFormat('Y/m/d', $request->end_date)->toCarbon());
+        }
 
         $articles = $articles->paginate(5)->withQueryString();
-        return view('admin.user.articles',compact('articles'));
+        return view('admin.user.articles', compact('articles'));
     }
 
-    public function comments(Request $request,User $user)
+    public function comments(Request $request, User $user)
     {
         $request->validate([
-            'title'=>'nullable|string|max:100',
-            'status'=>'nullable|string|in:active,inactive',
-            'end_date'=>'nullable|date'
+            'title' => 'nullable|string|max:100',
+            'status' => 'nullable|string|in:active,inactive',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date'
         ]);
 
         $comments = $user->comments();
 
-        $comments = empty($request->title) ? $comments : $comments->where('title','LIKE','%'.$request->title.'%');
-        $comments = empty($request->status) ? $comments : $comments->where('is_active','=',$request->status == 'active');
-        $comments = empty($request->end_date) ? $comments : $comments->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        if ($request->has('title') && !empty($request->title)) {
+            $comments = $comments->where('title', 'LIKE', '%' . $request->title . '%');
+        }
+        if ($request->has('status') && !empty($request->status)) {
+            $comments = $comments->where('is_active', '=', $request->status == 'active');
+        }
+        if ($request->has('start_date') && !empty($request->start_date)) {
+            $comments = $comments->where('created_at', '>=', Jalalian::fromFormat('Y/m/d', $request->start_date)->toCarbon());
+        }
+        if ($request->has('end_date') && !empty($request->end_date)) {
+            $comments = $comments->where('created_at', '<=', Jalalian::fromFormat('Y/m/d', $request->end_date)->toCarbon());
+        }
 
         $comments = $comments->paginate(5)->withQueryString();
 
-        return view('admin.user.comments',compact('comments'));
+        return view('admin.user.comments', compact('comments'));
     }
 
 
