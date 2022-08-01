@@ -71,22 +71,27 @@
                         <span class="badge bg-warning text-dark">{{$user->role->farsi_name}}</span>
                     </td>
                     <td>
-                        {{$user->is_active ? 'فعال' : 'غیر فعال'}}
+                        @if($user->status == 'new') جدید
+                        @elseif($user->status == 'active')فعال
+                        @elseif($user->status == 'inactive')غیرفعال
+                            @endif
                     </td>
                     <td>{{$user->articles_count}}</td>
                     <td>{{$user->comments_count}}</td>
                     <td>{{\Morilog\Jalali\Jalalian::forge($user->created_at)->format('%A, %d %B %y')}}</td>
                     <td class="d-flex justify-content-around">
-                        @if($user->is_active)
+                        @if($user->status == 'active')
                             <form action="{{route('admin.user.status',$user->username)}}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="action" value="deactivate">
                                 <button type="submit" class="btn btn-sm btn-danger">غیر فعال سازی</button>
                             </form>
                         @else
                             <form action="{{route('admin.user.status',$user->username)}}" method="POST">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" name="action" value="activate">
                                 <button type="submit" class="btn btn-sm btn-success">فعال سازی</button>
                             </form>
                         @endif
