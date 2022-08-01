@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Symfony\Component\Console\Input\Input;
 use function Ybazli\Faker\string;
-
+use function App\Http\Controllers\Blog\UserController\save;
 class ArticleController extends Controller
 {
     public function index(Request $request)
@@ -123,6 +123,7 @@ class ArticleController extends Controller
         return view("main.article_create");
     }
 
+
     public function store(Request $request)
     {
         $validate_data = $request->validate([
@@ -133,15 +134,14 @@ class ArticleController extends Controller
             'body' => 'required',
             ]);
 
-        $file = $request->file('thumbnail');
-        $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
-        $file->move(public_path('\\uploads\\imgs'), $file_name);
+        $validate_data['thumbnail'] = $this->save_file($request, 'thumbnail');;
 
-        $validate_data['thumbnail'] = $file_name;
         $tags = $request->validate(['tags' => ['required']])['tags'];
+
+        $validate_data['tags'] = json_encode(explode(",", $tags));
+
         $validate_data['slug'] = Str::slug($validate_data['title']);
-        $tags = explode(",", $tags);
-        $validate_data['tags'] = json_encode($tags);
+
         $validate_data['user_id'] = auth()->id();
         Article::create($validate_data);
         return Redirect::route('article.show', ['user' => auth()->user()->username, 'article'=>$validate_data['slug']]);
@@ -151,4 +151,12 @@ class ArticleController extends Controller
         return \redirect()->back();
     }
 
+    protected function save_file($request, $name)
+    {
+        $file = $request->file($name);
+        $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
+        $file->move(public_path('\\uploads\\imgs'), $file_name);
+        return $file_name;
+
+    }
 }
