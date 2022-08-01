@@ -156,12 +156,17 @@ return [
      *
      * access: 0 - deny, 1 - read, 2 - read/write
      */
+
     'aclRules'          => [
         null => [
-            //['disk' => 'public', 'path' => '/', 'access' => 2],
+            ['disk' => 'public', 'path' => '/', 'access' => 0],
         ],
         1    => [
-            //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
+            ['disk' => 'images', 'path' => 'imgs/*', 'access' => 0],
+            //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
+        ],
+        2    => [
+            ['disk' => 'images', 'path' => 'imgs/*', 'access' => 0],
             //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
         ],
     ],
