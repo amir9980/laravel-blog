@@ -3,7 +3,6 @@
 @section('title','نظرات')
 
 @section('content')
-
     <div>
         <h4>جستجو</h4>
         <form action="#">

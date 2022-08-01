@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.rtl.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('panel/css/open-iconic-bootstrap.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('panel/css/kamadatepicker.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('panel/css/jalalidatepicker.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('panel/css/admin.css')}}"/>
 
     <title>@yield('title')</title>
@@ -147,21 +147,16 @@
 <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('panel/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('panel/js/kamadatepicker.min.js')}}"></script>
+<script src="{{asset('panel/js/jalalidatepicker.min.js')}}"></script>
 
 <script>
     $(document).ready(function (){
         $(".loader-div").hide();
+
+        jalaliDatepicker.startWatch();
     });
 
-    kamaDatepicker('persianDatePicker', {
-        buttonsColor: "red",
-        markToday: true,
-        gotoToday: true,
-        twodigit: true,
-        closeAfterSelect: true,
 
-    });
 </script>
 
 <script

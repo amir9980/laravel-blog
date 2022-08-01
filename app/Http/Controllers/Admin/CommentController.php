@@ -15,14 +15,24 @@ class CommentController extends Controller
         $request->validate([
             'title'=>'nullable|string|max:100',
             'status'=>'nullable|string|in:active,inactive',
+            'start_date'=>'nullable|date',
             'end_date'=>'nullable|date'
         ]);
 
         $comments = Comment::query();
 
-        $comments = empty($request->title) ? $comments : $comments->where('title','LIKE','%'.$request->title.'%');
-        $comments = empty($request->status) ? $comments : $comments->where('is_active','=',$request->status == 'active');
-        $comments = empty($request->end_date) ? $comments : $comments->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        if ($request->has('title')&&!empty('title')){
+            $comments = $comments->where('title','LIKE','%'.$request->title.'%');
+        }
+        if ($request->has('status')&&!empty('status')){
+            $comments = $comments->where('is_active','=',$request->status == 'active');
+        }
+        if ($request->has('start_date')&&!empty('start_date')){
+            $comments = $comments->where('created_at','>=',Jalalian::fromFormat('Y/m/d',$request->start_date)->toCarbon());
+        }
+        if ($request->has('end_date')&&!empty('end_date')){
+            $comments = $comments->where('created_at','<=',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        }
 
         $comments = $comments->paginate(5)->withQueryString();
 
