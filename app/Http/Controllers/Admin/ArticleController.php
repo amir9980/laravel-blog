@@ -21,16 +21,25 @@ class ArticleController extends Controller
         $request->validate([
             'title'=>'nullable|string|max:100',
             'status'=>'nullable|string|in:active,inactive',
+            'start_date'=>'nullable|date',
             'end_date'=>'nullable|date'
         ]);
 
         $articles = Article::query();
 
-        $articles = empty($request->title) ? $articles : $articles->where('title','LIKE','%'.$request->title.'%');
-        $articles = empty($request->status) ? $articles : $articles->where('is_active','=',$request->status == 'active');
-        $articles = empty($request->end_date) ? $articles : $articles->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
-        $articles = $articles->withCount(['comments'=>function(Builder $query){
-        }])->paginate(5)->withQueryString();
+        if ($request->has('title')&&!empty($request->title)){
+            $articles = $articles->where('title','LIKE','%'.$request->title.'%');
+        }
+        if ($request->has('status')&&!empty($request->status)) {
+            $articles = $articles->where('is_active','=',$request->status == 'active');
+        }
+        if ($request->has('start_date')&&!empty($request->start_date)){
+            $articles = $articles->where('created_at','>=',Jalalian::fromFormat('Y/m/d',$request->start_date)->toCarbon());
+        }
+        if ($request->has('end-date')&&!empty($request->end_date)){
+            $articles = $articles->where('created_at','<=',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        }
+        $articles = $articles->withCount(['comments'])->paginate(5)->withQueryString();
 
         return view('admin.article.index',compact('articles'));
     }
@@ -118,14 +127,23 @@ class ArticleController extends Controller
         $request->validate([
             'title'=>'nullable|string|max:100',
             'status'=>'nullable|string|in:active,inactive',
+            'start_date'=>'nullable|date',
             'end_date'=>'nullable|date'
         ]);
 
         $comments = $article->comments();
-
-        $comments = empty($request->title) ? $comments : $comments->where('title','LIKE','%'.$request->title.'%');
-        $comments = empty($request->status) ? $comments : $comments->where('is_active','=',$request->status == 'active');
-        $comments = empty($request->end_date) ? $comments : $comments->where('created_at','<',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        if ($request->has('title')&&!empty($request->title)){
+            $comments = $comments->where('title','LIKE','%'.$request->title.'%');
+        }
+        if ($request->has('status')&&!empty($request->status)){
+            $comments = $comments->where('is_active','=',$request->status == 'active');
+        }
+        if ($request->has('start_date')&&!empty($request->start_date)){
+            $comments = $comments->where('created_at','>=',Jalalian::fromFormat('Y/m/d',$request->start_date)->toCarbon());
+        }
+        if ($request->has('end_date')&&!empty($request->end_date)){
+            $comments = $comments->where('created_at','<=',Jalalian::fromFormat('Y/m/d',$request->end_date)->toCarbon());
+        }
 
         $comments = $comments->paginate(5)->withQueryString();
         return view('admin.article.comments',compact('comments'));
