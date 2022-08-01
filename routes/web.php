@@ -75,13 +75,13 @@ Route::prefix("articles")->group(function () {
 
 
 // ======================== users ===============================
-Route::prefix("users")->group(function () {
+Route::prefix("users")->middleware("auth")->group(function () {
     // ----------------------------- user profile --------------
     Route::get("/{user:username}", [blogUserController::class, 'profile'])->name("user.profile");
     // ----------------------------- user articles -------------
     Route::get("/{user:username}/articles", [blogUserController::class, 'articles'])->name('user.articles');
     // ----------------------------- user edit page ------------
-    Route::get("/{user:username}/edit", [blogUserController::class, 'edit'])->name("user.edit")->middleware("auth");
+    Route::get("/{user:username}/edit", [BlogUserController::class, 'edit'])->name("user.edit");
     // ----------------------------- user update profile -------
     Route::put("/{user:username}/update", [blogUserController::class, 'update'])->name("user.update");
 });
