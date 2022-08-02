@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Symfony\Component\Console\Input\Input;
 use function Ybazli\Faker\string;
-use function App\Http\Controllers\Blog\UserController\save;
 class ArticleController extends Controller
 {
     public function index(Request $request)
@@ -60,35 +59,31 @@ class ArticleController extends Controller
 
     }
 
+    protected function toggle_response($toggle)
+    {
+        $status = false;
+        if (! empty($toggle['attached'])) {
+            $status = 'attached';
+        } elseif (! empty($toggle['detached'])) {
+            $status = 'detached';
+        }
+
+        return $status;
+    }
+
     public function bookmark(Request $request, Article $article)
     {
-        $count1 = auth()->user()->user_bookmarks()->count();
+        $toggle = $request->user()->bookmarks()->toggle([$article->id]);
 
-        $request->user()->bookmarks()->toggle([$article->id]);
-
-        $count2 = auth()->user()->user_bookmarks()->count();
-
-        if ($count1 != $count2) {
-            return response()->json(['status' => true]);
-        } else {
-            return response()->json(['status' => false]);
-        }
+        return response()->json(['status' => $this->toggle_response($toggle)]);
     }
 
     public function like(Request $request, Article $article)
     {
-        $count1 = auth()->user()->user_likes()->count();
+        $toggle = $request->user()->likes()->toggle([$article->id]);
 
-        $request->user()->likes()->toggle([$article->id]);
-        $article->update(['likes' => $article->likes()->count()]);
+        return response()->json(['status' => $this->toggle_response($toggle)]);
 
-        $count2 = auth()->user()->user_likes()->count();
-
-        if ($count1 != $count2) {
-            return response()->json(['status' => true]);
-        } else {
-            return response()->json(['status' => false]);
-        }
     }
 
     public function comment_store(Request $request, Article $article)
@@ -123,6 +118,23 @@ class ArticleController extends Controller
         return view("main.article_create");
     }
 
+    public function ck_upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            if ($request->has('upload')) {
+                $originName = $request->file('upload')->getClientOriginalName();
+                $fileName = pathinfo($originName, PATHINFO_FILENAME);
+                $extension = $request->file('upload')->getClientOriginalExtension();
+                $fileName = $fileName . '_' . time() . "." . $extension;
+
+                $request->file('upload')->move(public_path('\\uploads\\imgs'), $fileName);
+
+                $url = asset('/uploads/imgs/');
+                return response()->json(['fileName' => $fileName, 'uploaded' => 1,'url', $url]);
+            }
+        }
+
+    }
 
     public function store(Request $request)
     {
@@ -157,6 +169,5 @@ class ArticleController extends Controller
         $file_name = str_replace(":", "-", str_replace(" ", "-", now())) . $file->getClientOriginalName();
         $file->move(public_path('\\uploads\\imgs'), $file_name);
         return $file_name;
-
     }
 }
