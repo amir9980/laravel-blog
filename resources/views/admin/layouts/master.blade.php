@@ -46,11 +46,11 @@
         <div class="me-3 d-flex">
             <a href="{{route('admin.notification.users')}}" class="btn btn-sm btn-primary">
                 کاربران جدید <span
-                        class="badge bg-light text-dark">{{\App\Models\User::query()->whereStatus('new')->count()}}</span>
+                        class="badge bg-light text-dark">{{$usersNotification}}</span>
             </a>
             <a href="{{route('admin.notification.comments')}}" class="btn btn-sm btn-success me-2">
                 نظرات جدید <span
-                        class="badge bg-light text-dark">{{\App\Models\Comment::query()->whereStatus('new')->count()}}</span>
+                        class="badge bg-light text-dark">{{$commentsNotification}}</span>
             </a>
             <form action="{{route('logout')}}" method="POST">
                 @csrf

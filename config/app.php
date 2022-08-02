@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Ybazli\Faker\FakerServiceProvider::class,
+        \App\Providers\ViewServiceProvider::class,
 
 
         /*
