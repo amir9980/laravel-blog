@@ -30,7 +30,6 @@
                             @if(! is_null($user->profile->social_media))
                                 @foreach(json_decode($user->profile->social_media) as $key=>$value)
                                     <li><a  href="{{$value}}" class="decoration-none"><span class="fab fa-{{$key}}"></span></a></li>
-
                                 @endforeach
                             @endif
 {{--                            <li><i class="fa fa-dribbble"></i></li>--}}

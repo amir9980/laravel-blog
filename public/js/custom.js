@@ -11,12 +11,16 @@ function apply(item, url, method) {
         dataType: 'json',
         data: {_token:token,_method:method},
         success: function (response) {
-            if (response.status) {
+            if (response.status === "attached") {
                 if (item.className.includes("fa-thin")) {
                     item.className = item.className.replace(' fa-thin', 'fa');
-                } else {
+                }
+            }  else if (response.status === 'detached') {
+                if (item.className.includes("fa")) {
                     item.className = item.className.replace(' fa', 'fa-thin')
                 }
+            } else {
+                console.log(url + ' failed');
             }
         }, complete: function () {
             sleep(1400).then(() => {

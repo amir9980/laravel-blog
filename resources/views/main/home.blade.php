@@ -46,7 +46,7 @@
 
                             </div>
                         <a class="custom-a " href="{{route("user.profile", $user->username)}}">
-                            <img class="profile" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/images/'.$user->profile_image}}"  >
+                            <img class="profile" src="{{is_null($user->profile_image)?'/uploads/defaults/profile.png':'/uploads/imgs/'.$user->profile_image}}"  >
                         </a>
                         </div>
                         <div class="me-2 ms-3 mt-1 float-start" >

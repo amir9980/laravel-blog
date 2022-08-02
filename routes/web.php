@@ -57,14 +57,16 @@ Route::prefix("articles")->group(function () {
     Route::get("/{user:username}/{article:slug}", [ArticleController::class, 'show'])->name('article.show');
     // ----------------------------- create article ----------
     Route::get("/create", [ArticleController::class, 'create'])->name('article.create')->middleware('can:create,App\Models\Article');
+    // ----------------------------- ck-upload image----------
+    Route::post('/ck',[ArticleController::class, 'ck_upload'])->name('ck.upload');
     // ----------------------------- store article ----------
     Route::post("/create", [ArticleController::class, 'store'])->name('article.store')->middleware('can:create,App\Models\Article');
     // ----------------------------- destroy article ----------
     Route::delete("{article:slug}/destroy", [ArticleController::class, 'destroy'])->name('article.destroy')->middleware('can:create,App\Models\Article');
     // ----------------------------- single bookmark ---------
-    Route::match(['post', 'delete'],"/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
+    Route::post("/{article:slug}/bookmark", [ArticleController::class, 'bookmark'])->name('article.bookmark');
     // ----------------------------- single like -------------
-    Route::match(['post', 'delete'],"/{article:slug}/like", [ArticleController::class, 'like'])->name('article.like');
+    Route::post("/{article:slug}/like", [ArticleController::class, 'like'])->name('article.like');
     // ----------------------------- create comment ----------
     Route::post('/{article:slug}/comment', [ArticleController::class, 'comment_store'])->name('comment.store');
     // ----------------------------- destroy comment----------
