@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,9 +41,10 @@ class UserController extends Controller
             $users = $users->where('created_at', '<=', Jalalian::fromFormat('Y/m/d', $request->end_date)->toCarbon());
         }
 
-        $users = $users->withCount(['comments', 'articles'])->paginate(5)->withQueryString();
+        $users = $users->with(['role'])->withCount(['comments', 'articles'])->paginate(5)->withQueryString();
 
-        return view('admin.user.index', compact('users'));
+//        return view('admin.user.index', compact('users'));
+        return UserResource::collection($users);
     }
 
     public function edit(User $user)

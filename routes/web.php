@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Blog\ArticleController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\ArticleController as adminArticleController;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Blog\UserController as blogUserController;
+use App\Http\Controllers\Blog\UserController as BlogUserController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -25,11 +25,11 @@ use App\Http\Controllers\Admin\CategoryController;
 require __DIR__."/auth.php";
 
 // ======================== admin panel ===============================
-Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(function (){
+Route::prefix('admin')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
-    Route::resource('article',adminArticleController::class,['as'=>'admin']);
-    Route::put('/article/{article:slug}/status',[adminArticleController::class,'status'])->name('admin.article.status');
-    Route::get('/article/{article:slug}/comments',[adminArticleController::class,'comments'])->name('admin.article.comments');
+    Route::resource('article',AdminArticleController::class,['as'=>'admin']);
+    Route::put('/article/{article:slug}/status',[AdminArticleController::class,'status'])->name('admin.article.status');
+    Route::get('/article/{article:slug}/comments',[AdminArticleController::class,'comments'])->name('admin.article.comments');
     Route::get('/user/index',[UserController::class,'index'])->name('admin.user.index');
     Route::get('/user/{user:username}/articles',[UserController::class,'articles'])->name('admin.user.articles');
     Route::get('/user/{user:username}/comments',[UserController::class,'comments'])->name('admin.user.comments');
@@ -47,7 +47,6 @@ Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(functio
     Route::post('category/store',[CategoryController::class,'store'])->name('admin.category.store');
     Route::put('category/update',[CategoryController::class,'update'])->name('admin.category.update');
 });
-
 
 // ----------------------------- home --------------------
 Route::get('/', [ArticleController::class, 'index'])->name("home");
@@ -79,11 +78,11 @@ Route::prefix("articles")->group(function () {
 // ======================== users ===============================
 Route::prefix("users")->middleware("auth")->group(function () {
     // ----------------------------- user profile --------------
-    Route::get("/{user:username}", [blogUserController::class, 'profile'])->name("user.profile");
+    Route::get("/{user:username}", [BlogUserController::class, 'profile'])->name("user.profile");
     // ----------------------------- user articles -------------
-    Route::get("/{user:username}/articles", [blogUserController::class, 'articles'])->name('user.articles');
+    Route::get("/{user:username}/articles", [BlogUserController::class, 'articles'])->name('user.articles');
     // ----------------------------- user edit page ------------
     Route::get("/{user:username}/edit", [BlogUserController::class, 'edit'])->name("user.edit");
     // ----------------------------- user update profile -------
-    Route::put("/{user:username}/update", [blogUserController::class, 'update'])->name("user.update");
+    Route::put("/{user:username}/update", [BlogUserController::class, 'update'])->name("user.update");
 });
