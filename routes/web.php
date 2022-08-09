@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\CategoryController;
 require __DIR__."/auth.php";
 
 // ======================== admin panel ===============================
-Route::prefix('admin')->middleware('can:viewAny,App\Models\User')->group(function (){
+Route::prefix('admin')->group(function (){
     Route::get('/',[AdminController::class,'dashboard'])->name('admin.dashboard');
     Route::resource('article',AdminArticleController::class,['as'=>'admin']);
     Route::put('/article/{article:slug}/status',[AdminArticleController::class,'status'])->name('admin.article.status');

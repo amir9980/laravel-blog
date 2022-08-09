@@ -48,9 +48,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->createToken('api token');
+
         Profile::create(['user_id' => $user->id]);
 
-        $user->notifications()->create([]);
+//        $user->notifications()->create([]);
 
         event(new Registered($user));
 

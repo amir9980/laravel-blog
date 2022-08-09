@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="loader-div">
-<span class="loader"></span>
+    <span class="loader"></span>
 </div>
 <nav class="navbar sticky-top bg-white navbar-expand-md navbar-light p-0">
     <div class="d-flex align-items-center">
@@ -24,9 +24,9 @@
             پنل مدیریت
         </a>
         <span
-                class="oi oi-menu ms-4"
-                data-toggle="collapse"
-                data-target="#sidebar"
+            class="oi oi-menu ms-4"
+            data-toggle="collapse"
+            data-target="#sidebar"
         ></span>
     </div>
 
@@ -46,11 +46,11 @@
         <div class="me-3 d-flex">
             <a href="{{route('admin.notification.users')}}" class="btn btn-sm btn-primary">
                 کاربران جدید <span
-                        class="badge bg-light text-dark">{{$usersNotification}}</span>
+                    class="badge bg-light text-dark">{{$usersNotification}}</span>
             </a>
             <a href="{{route('admin.notification.comments')}}" class="btn btn-sm btn-success me-2">
                 نظرات جدید <span
-                        class="badge bg-light text-dark">{{$commentsNotification}}</span>
+                    class="badge bg-light text-dark">{{$commentsNotification}}</span>
             </a>
             <form action="{{route('logout')}}" method="POST">
                 @csrf
@@ -64,8 +64,8 @@
 
     <div class="row">
         <div
-                class="col-12 col-md-2 bg-light text-dark collapse show "
-                id="sidebar"
+            class="col-12 col-md-2 bg-light text-dark collapse show "
+            id="sidebar"
         >
             <ul class="nav flex-column px-3">
                 <li class="nav-item d-flex align-items-center">
@@ -74,16 +74,17 @@
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <span class="oi oi-person"></span>
-                    <a href="{{route('admin.user.index')}}" class="nav-link my-1 w-100">اعضا</a>
+                    {{--                    <a href="{{route('admin.user.index')}}" class="nav-link my-1 w-100 ">اعضا</a>--}}
+                    <a type="button" class="nav-link my-1 w-100 usersIndex">اعضا</a>
                 </li>
                 <li class="nav-item">
                     <div class="d-flex align-items-center">
                         <span class="oi oi-book"></span>
                         <a
-                                href="#"
-                                class="nav-link my-1 w-100 collapsed"
-                                data-toggle="collapse"
-                                data-target="#articlesSubmenu"
+                            href="#"
+                            class="nav-link my-1 w-100 collapsed"
+                            data-toggle="collapse"
+                            data-target="#articlesSubmenu"
                         >مقالات
                             <span class="oi oi-chevron-left float-end"></span>
                         </a>
@@ -95,8 +96,8 @@
                             </li>
                             <li class="nav-item w-100">
                                 <a
-                                        href="{{route('article.create')}}"
-                                        class="nav-link my-1 w-100 collapsed"
+                                    href="{{route('article.create')}}"
+                                    class="nav-link my-1 w-100 collapsed"
 
                                 >ارسال مقاله
                                 </a>
@@ -123,8 +124,8 @@
                         </li>
                         <li class="nav-item w-100">
                             <a
-                                    href="{{route('admin.category.create')}}"
-                                    class="nav-link my-1 w-100 collapsed"
+                                href="{{route('admin.category.create')}}"
+                                class="nav-link my-1 w-100 collapsed"
 
                             >ایجاد دسته بندی</a>
                         </li>
@@ -150,19 +151,78 @@
 <script src="{{asset('panel/js/jalalidatepicker.min.js')}}"></script>
 
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         $(".loader-div").hide();
-
         jalaliDatepicker.startWatch();
+
+        $(".usersIndex").on("click", function () {
+            fetch("/admin/user/index", {}).then(response => {
+                return response.json();
+            }).then(jsonResponse => {
+                let main = $("#main");
+                main.text('');
+                let table = $("<table>", {
+                    class: "table table-bordered table-striped text-center mt-5"
+                });
+
+                table.html(`<thead>
+                    <th>ردیف</th>
+                <th>نام کاربری</th>
+                <th>نقش</th>
+                <th>وضعیت</th>
+                <th>مقاله ها</th>
+                <th>نظرات</th>
+                <th>تاریخ ثبت</th>
+                <th>عملیات</th>
+            </thead>
+`);
+                let tbody = $("<tbody>");
+
+                jsonResponse.data.forEach((user) => {
+                    let tr = $("<tr>");
+                    let actionsTd = $("<td>",{
+                        class: "d-flex justify-content-around"
+                    });
+                    if (user.status === 'active'){
+                        actionsTd.append($("<button>",{
+                            class: 'btn btn-sm btn-danger',
+                            text: 'غیرفعال سازی'
+                        }));
+                    }else{
+                        actionsTd.append($("<button>",{
+                            class: 'btn btn-sm btn-success',
+                            text: 'فعال سازی'
+                        }))
+                    }
+
+                    tr.html(`
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td><span class="badge bg-warning text-dark">${user.role.farsi_name}</span></td>
+                        <td>${user.status}</td>
+                        <td>${user.articles_count}</td>
+                        <td>${user.comments_count}</td>
+                        <td>${user.created_at}</td>
+`);
+                    tr.append(actionsTd);
+                    $(tbody).append(tr);
+                });
+                table.append(tbody);
+                main.append(table);
+
+
+            });
+        });
+
     });
 
 
 </script>
 
 <script
-        src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"
+    src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
 ></script>
 
 
