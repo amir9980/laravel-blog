@@ -23,25 +23,25 @@ class ArticleController extends Controller
     {
         $articles = Article::orderBy('id', 'desc');
 
-        if (str_contains($request->fullUrl(), "?")) {
-                foreach ($request->query as $key=>$value){
-                    if ($key == "orderBy") {
-                        if (!in_array($value, ['newest', 'name', 'likes'])){
-                            continue;
-                        }
-                        if ($value == 'newest') {
-                            $articles = Article::orderBy('id', 'desc');
-
-                        } elseif ($value == 'title') {
-                            $articles = Article::orderBy('title');
-                        }elseif ($value == 'likes') {
-                            $articles = Article::orderBy('likes', 'desc');
-                        }
-                     } elseif ($key == 'search') {
-                        $articles = $articles->where('title','LIKE', '%'.urldecode($value).'%')->orWhere('body', 'LIKE', '%'.urldecode($value).'%')->orWhere('description', 'LIKE', '%'.urldecode($value).'%');
+        if (! empty($request->query())) {
+            foreach ($request->query as $key=>$value){
+                if ($key == "orderBy") {
+                    if (!in_array($value, ['name', 'likes'])){
+                        continue;
                     }
+                    if ($value == 'name') {
+                        $articles = Article::orderBy('title');
+                    } elseif ($value == 'likes') {
+                        $articles = Article::orderBy('likes', 'desc');
+                    }
+                 } elseif ($key == 'search') {
+                    $articles = $articles
+                        ->where('title','LIKE', '%'.urldecode($value).'%')
+                        ->orWhere('body', 'LIKE', '%'.urldecode($value).'%')
+                        ->orWhere('description', 'LIKE', '%'.urldecode($value).'%');
                 }
             }
+        }
         $articles = $articles->paginate(10)->withQueryString();
 
         $bookmarks = auth()->check()?auth()->user()->user_bookmarks->pluck('article_id')->toArray():[];
@@ -120,6 +120,7 @@ class ArticleController extends Controller
 
     public function ck_upload(Request $request)
     {
+
         if ($request->hasFile('upload')) {
             if ($request->has('upload')) {
                 $originName = $request->file('upload')->getClientOriginalName();
@@ -129,10 +130,16 @@ class ArticleController extends Controller
 
                 $request->file('upload')->move(public_path('\\uploads\\imgs'), $fileName);
 
-                $url = asset('/uploads/imgs/');
-                return response()->json(['fileName' => $fileName, 'uploaded' => 1,'url', $url]);
+                $url = asset('/uploads/imgs') . "/". $fileName;
+
+                return response()->json([
+                    "uploaded"=> 1,
+                    "fileName"=> $fileName,
+                    "url"=> $url
+                ]);
             }
         }
+        return response()->json(['uploaded' => 0]);
 
     }
 
@@ -145,6 +152,8 @@ class ArticleController extends Controller
             'category_id' => ['required', Rule::in(Category::all()->pluck('id'))],
             'body' => 'required',
             ]);
+
+        dd($validate_data);
 
         $validate_data['thumbnail'] = $this->save_file($request, 'thumbnail');;
 
